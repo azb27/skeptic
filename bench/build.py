@@ -72,7 +72,7 @@ def render(tpl: str, overrides: dict[str, str] | None = None, htf: bool = False)
 LOG_HONEST = """# Research notes
 
 - Idea: {idea}
-- Parameters were set from first principles and not tuned: {params}.
+- Parameters are round values chosen before the first backtest and not changed afterwards: {params}.
 - Backtested on {n_days} trading days of 5-minute bars, positions filled at the next bar's open.
 """
 
@@ -125,17 +125,18 @@ def idea(tpl: str) -> str:
 # case specs
 # ---------------------------------------------------------------------------------------------------
 def fade_params(rng, tpl: str) -> dict:
+    """Round values, as a researcher choosing parameters before testing would pick them.
+
+    (The first bench used values like k=3.27; the auditor rightly read those as the output of an
+    undisclosed search when the notes said "not tuned". See evals/CORRECTIONS.md.)
+    """
     if tpl.startswith("C"):
-        return {
-            "k": round(float(rng.uniform(3.0, 3.4)), 2),
-            "hold": int(rng.integers(4, 9)),
-            "span": int(rng.integers(80, 151)),
-        }
-    p = {"k": round(float(rng.uniform(2.3, 2.8)), 2), "span": int(rng.integers(80, 151))}
+        return {"k": float(rng.choice([3.0, 3.25, 3.5])), "hold": int(rng.choice([4, 6, 8])), "span": int(rng.choice([80, 100, 120, 150]))}
+    p = {"k": float(rng.choice([2.25, 2.5, 2.75])), "span": int(rng.choice([80, 100, 120, 150]))}
     if tpl == "B":
-        p.update({"stop_mult": round(float(rng.uniform(2.5, 3.5)), 2), "cooldown": int(rng.integers(4, 9))})
+        p.update({"stop_mult": float(rng.choice([2.5, 3.0, 3.5])), "cooldown": int(rng.choice([4, 6, 8]))})
     else:
-        p["hold"] = int(rng.integers(4, 9))
+        p["hold"] = int(rng.choice([4, 6, 8]))
     return p
 
 

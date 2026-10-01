@@ -101,6 +101,13 @@ def future_blind(bars: pd.DataFrame, strat: Strategy, cuts: int = config.FUTURE_
         common = part.index.intersection(full.index)
         a, b = full.reindex(common), part.reindex(common)
         diff = ~((a == b) | (a.isna() & b.isna()))
+        if strat.kind == "brackets":
+            # A trade still open when the data ends may be dropped by a strategy that reports only
+            # completed trades. That is censoring, not look-ahead: ignore signals that are merely
+            # missing within one trade life of the cut. A signal that appears, flips or moves is not ignored.
+            near_end = np.zeros(len(common), dtype=bool)
+            near_end[-strat.max_bars - 1 :] = True
+            diff &= ~(near_end & a.notna().to_numpy() & b.isna().to_numpy())
         if diff.any():
             first = common[diff.to_numpy().argmax()]
             mismatches.append(

@@ -157,3 +157,33 @@ def test_stability_and_sessions(edge_mkt, null_mkt):
         "late",
         "off",
     }
+
+
+def test_dropping_trades_open_at_the_end_is_censoring_not_a_leak(edge_mkt):
+    """Found on the case study: the harness reports completed trades only, so a signal on the final bar vanishes."""
+
+    def completed_only(bars, p):
+        out = bracket_fade(bars, p)
+        last = bars.index[-1]
+        return [
+            b for b in out if b.ts < last - pd.Timedelta(minutes=5 * 10)
+        ]  # still open at the end -> dropped
+
+    assert future_blind(edge_mkt, Strategy("brackets", completed_only)).result == "PASS"
+
+    def peeking(bars, p):  # a bracket leak must still fail: the stop uses the next bar's range
+        rng_next = (bars["high"] - bars["low"]).shift(-1)
+        return [
+            Bracket(
+                b.ts,
+                b.side,
+                float(
+                    b.stop_usd + rng_next.get(b.ts, 0)
+                    if rng_next.get(b.ts) == rng_next.get(b.ts)
+                    else b.stop_usd
+                ),
+            )
+            for b in bracket_fade(bars, p)
+        ]
+
+    assert future_blind(edge_mkt, Strategy("brackets", peeking)).result == "REJECT"
