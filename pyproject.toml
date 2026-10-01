@@ -28,6 +28,7 @@ testpaths = ["tests"]
 [tool.ruff]
 line-length = 110
 target-version = "py311"
+extend-exclude = ["bench/cases", "private"]  # bench cases are test data: deliberately imperfect code
 
 [tool.ruff.lint]
 # explicit, so every ruff version enforces the same rules

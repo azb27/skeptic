@@ -12,3 +12,4 @@ __pycache__/
 .secrets/
 # private: Aziz's harness code stays out of the public repo
 /private/
+runs_*.log
