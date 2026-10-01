@@ -77,6 +77,69 @@ class Bracket:
     target_r: float = 1.0
 
 
+def resolve_brackets(
+    bars: pd.DataFrame,
+    sig_idx: np.ndarray,
+    side: np.ndarray,
+    stop_usd: np.ndarray,
+    target_r: np.ndarray,
+    max_bars: int = 41,
+    entry: str = "close",
+    ambiguity: str = "pessimistic",
+) -> dict[str, np.ndarray]:
+    """Vectorised core: resolve many brackets at once (also used by the random-entry check).
+
+    Returns arrays aligned with the inputs; `valid` is False for signals with no bar left to resolve on.
+    """
+    if entry not in ("close", "next_open") or ambiguity not in ("pessimistic", "optimistic"):
+        raise ValueError("entry must be close|next_open and ambiguity pessimistic|optimistic")
+    if np.any(stop_usd <= 0):
+        raise ValueError("stop distances must be positive")
+    o, h, lo, c = (bars[k].to_numpy(dtype=float) for k in ("open", "high", "low", "close"))
+    n = len(o)
+    sig_idx = np.asarray(sig_idx, dtype=int)
+    first = sig_idx + 1
+    valid = first < n
+    px = np.where(entry == "close", c[sig_idx], o[np.minimum(first, n - 1)])
+    stop = px - side * stop_usd
+    target = px + side * stop_usd * target_r
+
+    steps = np.arange(max_bars)
+    win = first[:, None] + steps[None, :]  # bars on which exits are checked
+    inside = win < n
+    win_c = np.minimum(win, n - 1)
+    hh, ll = h[win_c], lo[win_c]
+    long = (side > 0)[:, None]
+    hit_stop = np.where(long, ll <= stop[:, None], hh >= stop[:, None]) & inside
+    hit_tgt = np.where(long, hh >= target[:, None], ll <= target[:, None]) & inside
+    any_hit = hit_stop | hit_tgt
+    has_exit = any_hit.any(axis=1)
+    k = np.where(has_exit, any_hit.argmax(axis=1), inside.sum(axis=1) - 1)
+    k = np.maximum(k, 0)
+    rows = np.arange(len(sig_idx))
+    s_at, t_at = hit_stop[rows, k], hit_tgt[rows, k]
+    both = s_at & t_at
+    take_stop = (s_at & ~t_at) | (both & (ambiguity == "pessimistic"))
+    exit_px = np.where(has_exit, np.where(take_stop, stop, target), c[np.minimum(first + k, n - 1)])
+    outcome = np.where(
+        ~has_exit,
+        "timeout",
+        np.where(
+            both,
+            np.where(take_stop, "ambiguous_stop", "ambiguous_target"),
+            np.where(take_stop, "stop", "target"),
+        ),
+    )
+    gross_r = side * (exit_px - px) / stop_usd
+    return {
+        "valid": valid,
+        "entry_px": px,
+        "exit_idx": np.minimum(first + k, n - 1),
+        "outcome": outcome,
+        "gross_r": gross_r,
+    }
+
+
 def run_brackets(
     bars: pd.DataFrame,
     signals: list[Bracket],
@@ -88,59 +151,36 @@ def run_brackets(
     """Resolve each signal independently (overlapping trades are allowed; the strategy owns cooldowns)."""
     if entry not in ("close", "next_open") or ambiguity not in ("pessimistic", "optimistic"):
         raise ValueError("entry must be close|next_open and ambiguity pessimistic|optimistic")
+    if not signals:
+        return pd.DataFrame()
     pos = {ts: i for i, ts in enumerate(bars.index)}
-    o, h, lo, c = (bars[k].to_numpy(dtype=float) for k in ("open", "high", "low", "close"))
+    missing = [s.ts for s in signals if s.ts not in pos]
+    if missing:
+        raise ValueError(f"signal at {missing[0]} has no bar")
+    idx = np.array([pos[s.ts] for s in signals])
+    side = np.array([s.side for s in signals], dtype=float)
+    stop = np.array([s.stop_usd for s in signals], dtype=float)
+    tr = np.array([s.target_r for s in signals], dtype=float)
+    r = resolve_brackets(bars, idx, side, stop, tr, max_bars, entry, ambiguity)
     days = bars["trading_day"].to_numpy() if "trading_day" in bars else np.zeros(len(bars))
-    out = []
-    for s in signals:
-        i = pos.get(s.ts)
-        if i is None or s.stop_usd <= 0:
-            raise ValueError(f"signal at {s.ts} has no bar or a non-positive stop")
-        if entry == "close":
-            px, first = c[i], i + 1
-        else:
-            if i + 1 >= len(bars):
-                continue
-            px, first = o[i + 1], i + 1
-        stop = px - s.side * s.stop_usd
-        target = px + s.side * s.stop_usd * s.target_r
-        outcome, exit_px, j = "timeout", None, None
-        for j in range(first, min(first + max_bars, len(bars))):
-            hit_stop = lo[j] <= stop if s.side > 0 else h[j] >= stop
-            hit_tgt = h[j] >= target if s.side > 0 else lo[j] <= target
-            if hit_stop and hit_tgt:
-                outcome = "ambiguous_stop" if ambiguity == "pessimistic" else "ambiguous_target"
-                exit_px = stop if ambiguity == "pessimistic" else target
-                break
-            if hit_stop:
-                outcome, exit_px = "stop", stop
-                break
-            if hit_tgt:
-                outcome, exit_px = "target", target
-                break
-        if exit_px is None:
-            if j is None:  # signal on the last bar: nothing to resolve
-                continue
-            exit_px = c[j]
-        gross_r = s.side * (exit_px - px) / s.stop_usd
-        cost_r = spread_usd / s.stop_usd
-        out.append(
-            {
-                "ts": s.ts,
-                "side": s.side,
-                "entry_px": px,
-                "stop_usd": s.stop_usd,
-                "outcome": outcome,
-                "exit_ts": bars.index[j],
-                "bars": j - i,
-                "hit_target": outcome in ("target", "ambiguous_target"),
-                "gross_r": gross_r,
-                "cost_r": cost_r,
-                "net_r": gross_r - cost_r,
-                "trading_day": days[i],
-            }
-        )
-    return pd.DataFrame(out)
+    keep = r["valid"]
+    out = pd.DataFrame(
+        {
+            "ts": bars.index[idx],
+            "side": side.astype(int),
+            "entry_px": r["entry_px"],
+            "stop_usd": stop,
+            "outcome": r["outcome"],
+            "exit_ts": bars.index[r["exit_idx"]],
+            "bars": r["exit_idx"] - idx,
+            "hit_target": np.isin(r["outcome"], ["target", "ambiguous_target"]),
+            "gross_r": r["gross_r"],
+            "cost_r": spread_usd / stop,
+            "trading_day": days[idx],
+        }
+    )[keep]
+    out.insert(len(out.columns) - 1, "net_r", out["gross_r"] - out["cost_r"])
+    return out.reset_index(drop=True)
 
 
 # ---------------------------------------------------------------------------------------------------
