@@ -19,10 +19,13 @@ def test_session_labels_by_close_hour():
 
 
 @needs_data
-def test_daily_break_sits_at_22_utc_so_the_offset_is_right():
+def test_daily_break_follows_new_york_time_through_daylight_saving():
+    """The break is 17:00-18:00 New York: 22:00 UTC in winter, 21:00 UTC in summer."""
     b = load_bars("1h")
-    by_hour = b.index.hour.value_counts()
-    assert by_hour.get(22, 0) < 0.1 * by_hour[12]  # the 17:00-18:00 EST break, i.e. 22:00 UTC
+    winter = b[b.index.month == 1].index.hour.value_counts()
+    summer = b[b.index.month == 7].index.hour.value_counts()
+    assert winter.get(22, 0) < 0.1 * winter[12] and winter.get(21, 0) > 0.5 * winter[12]
+    assert summer.get(21, 0) < 0.1 * summer[12] and summer.get(22, 0) > 0.5 * summer[12]
 
 
 @needs_data
