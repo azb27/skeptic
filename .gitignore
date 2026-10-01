@@ -1,0 +1,14 @@
+/data/*
+!/data/.gitkeep
+runs/
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+# secrets: never commit
+.env
+*.env
+.secrets/
+# private: Aziz's harness code stays out of the public repo
+/private/
