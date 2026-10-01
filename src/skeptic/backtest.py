@@ -202,13 +202,20 @@ def clustered_mean_ci(
     return bootstrap_ci(lambda idx: sums[idx].sum() / counts[idx].sum(), len(keys), n_boot=n_boot, seed=seed)
 
 
-def summarize(trades: pd.DataFrame, value: str) -> dict:
-    """Expectancy per trade (with a day-clustered CI), hit rate, trade count, and a daily Sharpe."""
+def summarize(trades: pd.DataFrame, value: str, all_days=None) -> dict:
+    """Expectancy per trade (with a day-clustered CI), hit rate, trade count, and a daily Sharpe.
+
+    `all_days` should list every trading day in the sample: days without trades count as zero PnL in the
+    Sharpe. Without it, only days with trades are used, which overstates the Sharpe of a strategy that
+    trades rarely.
+    """
     if trades.empty:
         return {"trades": 0}
     v = trades[value].to_numpy(dtype=float)
     mean, lo, hi = clustered_mean_ci(v, trades["trading_day"].to_numpy())
     daily = trades.groupby("trading_day")[value].sum()
+    if all_days is not None:
+        daily = daily.reindex(pd.Index(pd.unique(np.asarray(all_days))), fill_value=0.0)
     sharpe = (
         float(daily.mean() / daily.std(ddof=1) * np.sqrt(252))
         if len(daily) > 1 and daily.std() > 0
@@ -217,7 +224,7 @@ def summarize(trades: pd.DataFrame, value: str) -> dict:
     cum = np.cumsum(v)
     return {
         "trades": len(v),
-        "days": int(daily.size),
+        "days": int(trades["trading_day"].nunique()),
         "mean": float(mean),
         "ci": (float(lo), float(hi)),
         "hit_rate": float((v > 0).mean()),

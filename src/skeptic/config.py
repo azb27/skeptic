@@ -31,6 +31,7 @@ REALISTIC_SPREAD_USD = 0.50
 SEED = 27
 N_BOOT = 2000
 FUTURE_BLIND_CUTS = 5
+FUTURE_BLIND_DECISION_CUTS = 25  # extra cuts placed exactly at bars where the strategy's decision changes
 RANDOM_ENTRY_RUNS = 500
 DSR_THRESHOLD = 0.95
 PBO_THRESHOLD = 0.5

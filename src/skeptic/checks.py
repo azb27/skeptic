@@ -74,22 +74,31 @@ def _r(x: float, nd: int = 4) -> float:
 # ---------------------------------------------------------------------------------------------------
 # 1. future_blind: does the past change when the future is deleted?
 # ---------------------------------------------------------------------------------------------------
-def future_blind(bars: pd.DataFrame, strat: Strategy, cuts: int = config.FUTURE_BLIND_CUTS) -> CheckResult:
-    """Re-run the strategy on data truncated at several cut points and compare decisions made before each cut.
+def future_blind(bars: pd.DataFrame, strat: Strategy, cuts: int = config.FUTURE_BLIND_CUTS,
+                 decision_cuts: int = config.FUTURE_BLIND_DECISION_CUTS, seed: int = config.SEED) -> CheckResult:  # fmt: skip
+    """Re-run the strategy on data truncated at several cut points and compare decisions made up to each cut.
 
     A leak-free strategy decides at bar t using bars <= t only, so deleting later bars cannot change it.
     Any difference proves the strategy reads the future: shift(-1), centred windows, full-sample
     normalisation, higher-timeframe values before their bar closes, fitting or selecting on all data.
+
+    Cut points: `cuts` evenly spaced through the sample, plus up to `decision_cuts` bars where the
+    strategy's decision changes. A leak that looks only a bar or two ahead changes nothing far from the
+    cut, so cutting exactly at decision bars is what exposes it.
     """
     n = len(bars)
-    points = np.linspace(0.4, 0.9, cuts)
     full = _decisions(bars, strat)
+    even = [int(n * q) for q in np.linspace(0.4, 0.9, cuts)]
+    changes = np.flatnonzero(full.fillna(0).diff().fillna(0).to_numpy() != 0)
+    changes = changes[(changes > n * 0.2) & (changes < n - 1)]
+    if len(changes) > decision_cuts:
+        changes = np.sort(np.random.default_rng(seed).choice(changes, decision_cuts, replace=False))
+    points = sorted(set(even) | set(int(c) for c in changes))
     mismatches = []
-    for q in points:
-        cut = bars.index[int(n * q)]
-        part = _decisions(bars.loc[:cut], strat)
+    for i in points:
+        cut = bars.index[i]
+        part = _decisions(bars.iloc[: i + 1], strat)
         common = part.index.intersection(full.index)
-        common = common[common <= cut]
         a, b = full.reindex(common), part.reindex(common)
         diff = ~((a == b) | (a.isna() & b.isna()))
         if diff.any():
@@ -97,7 +106,7 @@ def future_blind(bars: pd.DataFrame, strat: Strategy, cuts: int = config.FUTURE_
             mismatches.append(
                 {"cut": str(cut), "changed": int(diff.sum()), "of": len(common), "first_changed": str(first)}
             )
-    ev = {"cuts": [str(bars.index[int(n * q)]) for q in points], "mismatches": mismatches}
+    ev = {"cut_points": len(points), "mismatches": mismatches[:10], "mismatch_count": len(mismatches)}
     if mismatches:
         return CheckResult(
             "future_blind",
@@ -105,9 +114,10 @@ def future_blind(bars: pd.DataFrame, strat: Strategy, cuts: int = config.FUTURE_
             ev,
             ["Shows that the strategy reads the future, not where; read the code to locate it."],
         )
-    return CheckResult(
-        "future_blind", "PASS", ev, ["Decisions before each cut were identical with and without later data."]
-    )
+    return CheckResult("future_blind", "PASS", ev, [
+        "Decisions up to each cut were identical with and without later data.",
+        "A pass covers the cut points tested; a leak that never changes a decision at those points can still exist.",
+    ])  # fmt: skip
 
 
 def _decisions(bars: pd.DataFrame, strat: Strategy) -> pd.Series:
@@ -128,7 +138,7 @@ def backtest(
     t = strat.run(bars, spread_usd)
     if t.empty:
         return CheckResult("backtest", "REJECT", {"trades": 0}, ["The strategy produced no trades."])
-    s = summarize(t, strat.net)
+    s = summarize(t, strat.net, bars["trading_day"] if "trading_day" in bars else None)
     ev = {
         "spread_usd": spread_usd,
         "unit": strat.unit,

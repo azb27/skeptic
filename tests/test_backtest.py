@@ -89,3 +89,10 @@ def test_summarize_reports_counts_and_drawdown():
     s = summarize(t, "net_r")
     assert s["trades"] == 4 and s["days"] == 2 and s["mean"] == pytest.approx(0.25)
     assert s["max_drawdown"] == pytest.approx(2.0) and s["hit_rate"] == 0.5
+
+
+def test_sharpe_counts_days_without_trades_when_told_about_them():
+    t = pd.DataFrame({"net_r": [1.0, 1.2, 0.8], "trading_day": [0, 5, 9]})
+    busy = summarize(t, "net_r")["sharpe_daily_ann"]
+    honest = summarize(t, "net_r", all_days=range(10))["sharpe_daily_ann"]
+    assert honest < busy / 3  # seven flat days dilute a strategy that rarely trades
