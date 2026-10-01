@@ -107,19 +107,22 @@ Synthetic markets (seeded): GARCH-style volatility, intraday session seasonality
 
 ## 7. Phases
 
-- [ ] **P0: Scaffold.** Repo, `CLAUDE.md`, ADR template, CI (lint + tests), data fetch from the public HF mirror, M1 → H1/M5 bars with session labels.
-- [ ] **P1: Backtest engine + costs.** Next-bar-open execution, spread/slippage, trade list, R and PnL, trade-level bootstrap.
-  - *Done:* engine tests with hand-computed trades.
-- [ ] **P2: Checks.** `future_blind`, `random_entry`, `costs`, `multiple_test` (DSR, PBO via CSCV), `walk_forward` (purged/embargoed), `sessions`.
-  - *Done:* each check has a test with a planted positive and a planted negative.
-- [ ] **P3: Bench.** Synthetic market generator, strategy templates, flaw injectors, manifest. Rules-only baseline scored.
-- [ ] **P4: Agent.** Messages API loop (port of Stockroom's), read-only file tools, check tools, `submit_verdict` with a JSON schema. Traces.
-- [ ] **P5: Eval.** All configs, report with CIs, failure analysis with traces.
+- [x] **P0: Scaffold.** Repo, `CLAUDE.md`, ADR template, CI (lint + tests), data fetch from the public HF mirror, M1 → H1/M5 bars with session labels.
+- [x] **P1: Backtest engine + costs.** Next-bar-open execution, spread/slippage, trade list, R and PnL, trade-level bootstrap.
+  - *Done:* engine tests with hand-computed trades; ADR 0001. Found and fixed a feed bug: the 1-minute data is New York local time with DST, not fixed EST as documented (a test checks the summer and winter break).
+- [x] **P2: Checks.** `future_blind`, `random_entry`, `costs`, `multiple_test` (DSR, PBO via CSCV), `walk_forward` (purged/embargoed), `sessions`.
+  - *Done:* each check has a test with a planted positive and a planted negative; ADR 0002 (truncation invariance, cut at decision bars).
+- [x] **P3: Bench.** Synthetic market generator, strategy templates, flaw injectors, manifest. Rules-only baseline scored.
+  - *Done:* 90 cases, each confirmed by an oracle. The truncation probe catches 22 of 35 leaks; the rest need code reading. Rules-only verdicts: 85/90 correct, 44/90 correct for the right reason. One bench bug was found by the auditor itself (`evals/CORRECTIONS.md` #1).
+- [x] **P4: Agent.** Messages API loop (port of Stockroom's), read-only file tools, check tools, `submit_verdict` with a JSON schema. Traces.
+  - *Done:* tests with a scripted fake model: case-folder confinement, forced verdict at the caps, undeclared arguments refused.
+- [ ] **P5: Eval.** All configs, report with CIs, failure analysis with traces. *In progress: Sonnet full 68/90 run before the API credit ran out; Haiku and both ablations pending.*
   - *Budget:* about $15–30 of API credit for all configs. A run cap is set before starting.
-- [ ] **P6: Case study.**
+- [x] **P6: Case study.**
   - Obtain Aziz's harness (the Python re-implementation of v5.3), or port the Pine logic if it's lost, and record which.
   - Reproduce the baseline on the independent feed. Then audit the code and the two write-ups, and write `docs/case-study-gold-sniper.md`.
   - The harness is private code. The repo publishes the audit and excerpts, not the harness.
+  - *Done:* `docs/case-study-gold-sniper.md`. The original −0.123R reproduces on an independent feed (−0.118R, 1,146 trades). Skeptic's engine agrees with the harness on 99.7% of outcomes. The probe's false alarm on end-of-data censoring was fixed (CORRECTIONS #2). The auditor missed three process gaps, documented.
 - [ ] **P7: Ship.** README (problem → bench table → case study → limits), MCP server + Claude Code skill so anyone can run `/skeptic` on their own strategy folder.
 
 ## 8. Out of scope
