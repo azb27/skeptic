@@ -1,0 +1,269 @@
+{
+ "generated_by": "private/run_case.py + private/case_stats.py + private/case_checks.py + private/audit_case.py (harness is private; aggregates only)",
+ "feed": "HistData-format XAUUSD 1-minute bid (public HF mirror), New York local time -> UTC, 5m and 1h bars, gold session only, cross-asset scoring off",
+ "replay": {
+  "5m_2024-09_2026-01": {
+   "trades": 1146,
+   "tp1_rate": 0.4974,
+   "ambiguous": 0,
+   "net_0.00": [
+    0.0097,
+    -0.047,
+    0.0641
+   ],
+   "net_0.20": [
+    -0.0415,
+    -0.0985,
+    0.013
+   ],
+   "net_0.50": [
+    -0.1183,
+    -0.1762,
+    -0.0628
+   ],
+   "net_0.90": [
+    -0.2207,
+    -0.28,
+    -0.1648
+   ],
+   "median_stop_usd": 4.38,
+   "engine_agreement_tp1": 0.9965095986038395,
+   "engine_gross_mean": 0.0147
+  },
+  "5m_2020_2026": {
+   "trades": 5135,
+   "tp1_rate": 0.4997,
+   "ambiguous": 7,
+   "net_0.00": [
+    0.019,
+    -0.0077,
+    0.046
+   ],
+   "net_0.20": [
+    -0.0689,
+    -0.0956,
+    -0.042
+   ],
+   "net_0.50": [
+    -0.2007,
+    -0.2282,
+    -0.1735
+   ],
+   "net_0.90": [
+    -0.3765,
+    -0.4061,
+    -0.3489
+   ],
+   "median_stop_usd": 2.62,
+   "engine_agreement_tp1": 0.9972736124634859,
+   "engine_gross_mean": 0.0203
+  },
+  "1h_2020_2026": {
+   "trades": 745,
+   "tp1_rate": 0.506,
+   "ambiguous": 6,
+   "net_0.00": [
+    -0.0034,
+    -0.0728,
+    0.0661
+   ],
+   "net_0.20": [
+    -0.0285,
+    -0.0974,
+    0.0412
+   ],
+   "net_0.50": [
+    -0.0663,
+    -0.1353,
+    0.0035
+   ],
+   "net_0.90": [
+    -0.1165,
+    -0.186,
+    -0.0465
+   ],
+   "median_stop_usd": 8.07,
+   "engine_agreement_tp1": 0.9906040268456375,
+   "engine_gross_mean": -0.0057
+  }
+ },
+ "checks": {
+  "backtest": {
+   "result": "REJECT",
+   "evidence": {
+    "spread_usd": 0.5,
+    "unit": "R per trade",
+    "trades": 1146,
+    "days": 344,
+    "mean": -0.1143,
+    "hit_rate": 0.5061,
+    "total": -130.9839,
+    "sharpe_daily_ann": -3.3119,
+    "max_drawdown": 146.1623,
+    "ci95": [
+     -0.1722,
+     -0.0597
+    ]
+   },
+   "caveats": [
+    "CI resamples whole trading days, because trades on the same day are not independent.",
+    "Net expectancy is not distinguishable from zero (or is negative) at this spread."
+   ]
+  },
+  "costs": {
+   "result": "REJECT",
+   "evidence": {
+    "gross_mean": 0.0137,
+    "unit": "R per trade",
+    "net_mean_by_spread": {
+     "0.00": 0.0137,
+     "0.20": -0.0375,
+     "0.50": -0.1143,
+     "0.90": -0.2167
+    },
+    "breakeven_spread_usd": 0.0536,
+    "realistic_spread_usd": 0.5,
+    "trades": 1146
+   },
+   "caveats": [
+    "Break-even uses the average trade; it ignores how costs vary with each trade's stop distance.",
+    "The edge cannot pay a $0.50 spread."
+   ]
+  },
+  "random_entry": {
+   "result": "REJECT",
+   "evidence": {
+    "actual_mean": -0.1143,
+    "random_mean": -0.1394,
+    "random_p95": -0.0924,
+    "p_value": 0.2136,
+    "runs": 500,
+    "unit": "R per trade"
+   },
+   "caveats": [
+    "Random entries keep the strategy's sides, holding periods (or stops and timeout) and trade count.",
+    "The entries do no better than random entries with the same exits."
+   ]
+  },
+  "stability": {
+   "result": "REJECT",
+   "evidence": {
+    "folds": [
+     {
+      "fold": 0,
+      "from": "2024-09-01",
+      "to": "2024-12-06",
+      "trades": 222,
+      "mean": -0.1851
+     },
+     {
+      "fold": 1,
+      "from": "2024-12-06",
+      "to": "2025-03-18",
+      "trades": 205,
+      "mean": -0.18
+     },
+     {
+      "fold": 2,
+      "from": "2025-03-18",
+      "to": "2025-06-25",
+      "trades": 253,
+      "mean": -0.0826
+     },
+     {
+      "fold": 3,
+      "from": "2025-06-25",
+      "to": "2025-10-01",
+      "trades": 231,
+      "mean": -0.168
+     },
+     {
+      "fold": 4,
+      "from": "2025-10-01",
+      "to": "2026-01-09",
+      "trades": 235,
+      "mean": 0.0285
+     }
+    ],
+    "losing_folds": 4,
+    "unit": "R per trade"
+   },
+   "caveats": [
+    "Most time folds lose money net of costs."
+   ]
+  },
+  "sessions": {
+   "result": "INFO",
+   "evidence": {
+    "by_session": {
+     "asia": {
+      "trades": 82,
+      "mean": -0.1719,
+      "sum": -14.0964
+     },
+     "late": {
+      "trades": 6,
+      "mean": -0.1863,
+      "sum": -1.1179
+     },
+     "london": {
+      "trades": 362,
+      "mean": -0.1543,
+      "sum": -55.863
+     },
+     "newyork": {
+      "trades": 637,
+      "mean": -0.0801,
+      "sum": -51.0218
+     },
+     "off": {
+      "trades": 59,
+      "mean": -0.1506,
+      "sum": -8.8848
+     }
+    },
+    "total": -130.9839,
+    "unit": "R per trade"
+   },
+   "caveats": []
+  },
+  "future_blind": {
+   "result": "PASS",
+   "evidence": {
+    "cut_points": 30,
+    "mismatches": [],
+    "mismatch_count": 0
+   },
+   "caveats": [
+    "Decisions up to each cut were identical with and without later data.",
+    "A pass covers the cut points tested; a leak that never changes a decision at those points can still exist."
+   ]
+  }
+ },
+ "agent": {
+  "model": "claude-sonnet-5",
+  "effort": "high",
+  "verdict": {
+   "verdict": "REJECT",
+   "flaw_class": "no_edge",
+   "summary": "Independent-feed backtest confirms the research team's own honest conclusion: net expectancy at the realistic $0.50 spread is -0.1143R/trade with a 95% CI entirely below zero (-0.172,-0.060), gross edge is only +0.0137R (breakeven spread ~$0.05, far below the real $0.50), random_entry shows the actual entries are statistically indistinguishable from random entries with the same exits (p=0.21), and stability shows 4 of 5 time folds net-losing. future_blind passes (no detectable look-ahead), and the PREREGISTRATION.md/RESULTS.md process is itself sound (correctly froze the strategy after H1-H3 all failed their pre-registered promotion rules). The flaw is simply that the strategy has no directional edge once realistic costs are applied; this is independently reproduced here, not a code or process bug.",
+   "file": null,
+   "line": null
+  },
+  "cost_usd": 0.048122,
+  "tools": [
+   "list_files",
+   "read_file",
+   "read_file",
+   "read_file",
+   "read_file",
+   "run_check",
+   "run_check",
+   "run_check",
+   "run_check",
+   "run_check",
+   "run_check",
+   "submit_verdict"
+  ]
+ }
+}
