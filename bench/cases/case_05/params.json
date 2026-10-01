@@ -1,0 +1,8 @@
+{
+  "params": {
+    "k": 2.36,
+    "span": 98,
+    "stop_mult": 3.4,
+    "cooldown": 8
+  }
+}
