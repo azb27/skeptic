@@ -1,5 +1,5 @@
 # Research notes
 
 - Idea: fade bars that move far more than recent volatility
-- Parameters were set from first principles and not tuned: {'k': 2.61, 'span': 115, 'hold': 6}.
-- Backtested on 400 trading days of 5-minute bars, positions filled at the next bar's open.
+- Gross of costs the signal is clearly positive on every subsample.
+- Parameters: {'k': 2.5, 'span': 80, 'hold': 4}.

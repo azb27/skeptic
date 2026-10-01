@@ -1,135 +1,20 @@
 [
  {
   "id": "case_01",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "lookahead_shift",
-  "accept_flaws": [
-   "lookahead_shift"
-  ],
-  "template": "D",
-  "kind": "positions",
-  "file": "strategy.py",
-  "line": 11,
-  "market": {
-   "n_days": 400,
-   "seed": 862657,
-   "edge": 1.04
-  },
-  "oracle": {
-   "future_blind": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_02",
-  "group": "multiple_testing",
-  "truth": "REJECT",
-  "flaw": "multiple_testing",
-  "accept_flaws": [
-   "multiple_testing",
-   "no_edge"
-  ],
-  "template": "D",
-  "kind": "positions",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 936289,
-   "edge": 0.0
-  },
-  "oracle": {
-   "best_of": 278,
-   "sharpe_ann": 1.01,
-   "backtest": "REJECT",
-   "dsr": 0.0202,
-   "pbo": 0.8333
-  },
-  "attempts": 1
- },
- {
-  "id": "case_03",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "lookahead_shift",
-  "accept_flaws": [
-   "lookahead_shift"
-  ],
-  "template": "A",
-  "kind": "positions",
-  "file": "strategy.py",
-  "line": 11,
-  "market": {
-   "n_days": 400,
-   "seed": 475968,
-   "edge": 0.0
-  },
-  "oracle": {
-   "future_blind": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_04",
-  "group": "no_edge",
-  "truth": "REJECT",
-  "flaw": "no_edge",
-  "accept_flaws": [
-   "no_edge"
-  ],
-  "template": "B",
-  "kind": "brackets",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 265080,
-   "edge": 0.0
-  },
-  "oracle": {
-   "backtest": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_05",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "centered_window",
-  "accept_flaws": [
-   "centered_window"
-  ],
-  "template": "B",
-  "kind": "brackets",
-  "file": "strategy.py",
-  "line": 14,
-  "market": {
-   "n_days": 400,
-   "seed": 329344,
-   "edge": 0.0
-  },
-  "oracle": {
-   "future_blind": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_06",
   "group": "survives",
   "truth": "SURVIVES",
   "flaw": "none",
   "accept_flaws": [
    "none"
   ],
-  "template": "A2",
+  "template": "C",
   "kind": "positions",
   "file": null,
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 173234,
-   "edge": 1.12
+   "seed": 363061,
+   "edge": 1.24
   },
   "oracle": {
    "future_blind": "PASS",
@@ -141,7 +26,7 @@
   "attempts": 1
  },
  {
-  "id": "case_07",
+  "id": "case_02",
   "group": "multiple_testing",
   "truth": "REJECT",
   "flaw": "multiple_testing",
@@ -155,42 +40,20 @@
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 312728,
+   "seed": 203178,
    "edge": 0.0
   },
   "oracle": {
-   "best_of": 204,
-   "sharpe_ann": 1.31,
+   "best_of": 214,
+   "sharpe_ann": 0.75,
    "backtest": "REJECT",
-   "dsr": 0.127,
-   "pbo": 0.2294
+   "dsr": 0.033,
+   "pbo": 0.6721
   },
   "attempts": 1
  },
  {
-  "id": "case_08",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "fullsample_stat",
-  "accept_flaws": [
-   "fullsample_stat"
-  ],
-  "template": "A",
-  "kind": "positions",
-  "file": "strategy.py",
-  "line": 11,
-  "market": {
-   "n_days": 400,
-   "seed": 495766,
-   "edge": 0.0
-  },
-  "oracle": {
-   "future_blind": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_09",
+  "id": "case_03",
   "group": "survives",
   "truth": "SURVIVES",
   "flaw": "none",
@@ -203,8 +66,8 @@
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 45731,
-   "edge": 1.09
+   "seed": 367094,
+   "edge": 1.17
   },
   "oracle": {
    "future_blind": "PASS",
@@ -216,29 +79,110 @@
   "attempts": 1
  },
  {
-  "id": "case_10",
-  "group": "leak",
+  "id": "case_04",
+  "group": "multiple_testing",
   "truth": "REJECT",
-  "flaw": "htf_resample",
+  "flaw": "multiple_testing",
   "accept_flaws": [
-   "htf_resample"
+   "multiple_testing",
+   "no_edge"
   ],
-  "template": "B",
-  "kind": "brackets",
-  "file": "strategy.py",
-  "line": 14,
+  "template": "F",
+  "kind": "positions",
+  "file": null,
+  "line": null,
   "market": {
    "n_days": 400,
-   "seed": 856214,
-   "edge": 1.01
+   "seed": 71833,
+   "edge": 0.0
   },
   "oracle": {
-   "future_blind": "REJECT"
+   "best_of": 232,
+   "sharpe_ann": 0.72,
+   "backtest": "REJECT",
+   "dsr": 0.0257,
+   "pbo": 0.4729
   },
   "attempts": 1
  },
  {
-  "id": "case_11",
+  "id": "case_05",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "centered_window",
+  "accept_flaws": [
+   "centered_window"
+  ],
+  "template": "E",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 11,
+  "market": {
+   "n_days": 400,
+   "seed": 479680,
+   "edge": 1.14
+  },
+  "oracle": {
+   "future_blind": "PASS"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_06",
+  "group": "multiple_testing",
+  "truth": "REJECT",
+  "flaw": "multiple_testing",
+  "accept_flaws": [
+   "multiple_testing",
+   "no_edge"
+  ],
+  "template": "D",
+  "kind": "positions",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 584814,
+   "edge": 0.0
+  },
+  "oracle": {
+   "best_of": 279,
+   "sharpe_ann": 1.21,
+   "backtest": "REJECT",
+   "dsr": 0.0556,
+   "pbo": 0.6721
+  },
+  "attempts": 2
+ },
+ {
+  "id": "case_07",
+  "group": "multiple_testing",
+  "truth": "REJECT",
+  "flaw": "multiple_testing",
+  "accept_flaws": [
+   "multiple_testing",
+   "no_edge"
+  ],
+  "template": "D",
+  "kind": "positions",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 316352,
+   "edge": 0.0
+  },
+  "oracle": {
+   "best_of": 255,
+   "sharpe_ann": 1.07,
+   "backtest": "REJECT",
+   "dsr": 0.0306,
+   "pbo": 0.6991
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_08",
   "group": "survives",
   "truth": "SURVIVES",
   "flaw": "none",
@@ -251,8 +195,8 @@
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 324504,
-   "edge": 1.23
+   "seed": 536327,
+   "edge": 0.9
   },
   "oracle": {
    "future_blind": "PASS",
@@ -264,24 +208,98 @@
   "attempts": 1
  },
  {
-  "id": "case_12",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "htf_resample",
+  "id": "case_09",
+  "group": "survives",
+  "truth": "SURVIVES",
+  "flaw": "none",
   "accept_flaws": [
-   "htf_resample"
+   "none"
   ],
-  "template": "A",
+  "template": "A2",
   "kind": "positions",
-  "file": "strategy.py",
-  "line": 12,
+  "file": null,
+  "line": null,
   "market": {
    "n_days": 400,
-   "seed": 866190,
+   "seed": 148654,
+   "edge": 1.16
+  },
+  "oracle": {
+   "future_blind": "PASS",
+   "backtest": "PASS",
+   "costs": "PASS",
+   "random_entry": "PASS",
+   "stability": "PASS"
+  },
+  "attempts": 2
+ },
+ {
+  "id": "case_10",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "selection_on_full_sample",
+  "accept_flaws": [
+   "selection_on_full_sample"
+  ],
+  "template": "A2",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 35,
+  "market": {
+   "n_days": 400,
+   "seed": 772173,
    "edge": 0.0
   },
   "oracle": {
    "future_blind": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_11",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "centered_window",
+  "accept_flaws": [
+   "centered_window"
+  ],
+  "template": "B",
+  "kind": "brackets",
+  "file": "strategy.py",
+  "line": 14,
+  "market": {
+   "n_days": 400,
+   "seed": 371884,
+   "edge": 0.0
+  },
+  "oracle": {
+   "future_blind": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_12",
+  "group": "survives",
+  "truth": "SURVIVES",
+  "flaw": "none",
+  "accept_flaws": [
+   "none"
+  ],
+  "template": "A",
+  "kind": "positions",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 488165,
+   "edge": 1.09
+  },
+  "oracle": {
+   "future_blind": "PASS",
+   "backtest": "PASS",
+   "costs": "PASS",
+   "random_entry": "PASS",
+   "stability": "PASS"
   },
   "attempts": 1
  },
@@ -299,8 +317,8 @@
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 591356,
-   "edge": 1.25
+   "seed": 551482,
+   "edge": 1.17
   },
   "oracle": {
    "future_blind": "PASS",
@@ -313,158 +331,28 @@
  },
  {
   "id": "case_14",
-  "group": "costs",
+  "group": "leak",
   "truth": "REJECT",
-  "flaw": "costs",
+  "flaw": "fullsample_stat",
   "accept_flaws": [
-   "costs"
+   "fullsample_stat"
   ],
-  "template": "B",
-  "kind": "brackets",
-  "file": null,
-  "line": null,
+  "template": "A2",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 20,
   "market": {
    "n_days": 400,
-   "seed": 129699,
-   "edge": 0.24
+   "seed": 156882,
+   "edge": 0.0
   },
   "oracle": {
-   "costs": "REJECT",
-   "gross": 0.062
+   "future_blind": "REJECT"
   },
   "attempts": 1
  },
  {
   "id": "case_15",
-  "group": "multiple_testing",
-  "truth": "REJECT",
-  "flaw": "multiple_testing",
-  "accept_flaws": [
-   "multiple_testing",
-   "no_edge"
-  ],
-  "template": "F",
-  "kind": "positions",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 367211,
-   "edge": 0.0
-  },
-  "oracle": {
-   "best_of": 174,
-   "sharpe_ann": 1.8,
-   "backtest": "PASS",
-   "dsr": 0.3245,
-   "pbo": 0.0271
-  },
-  "attempts": 1
- },
- {
-  "id": "case_16",
-  "group": "costs",
-  "truth": "REJECT",
-  "flaw": "costs",
-  "accept_flaws": [
-   "costs"
-  ],
-  "template": "A2",
-  "kind": "positions",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 646876,
-   "edge": 0.19
-  },
-  "oracle": {
-   "costs": "REJECT",
-   "gross": 0.2431
-  },
-  "attempts": 1
- },
- {
-  "id": "case_17",
-  "group": "survives",
-  "truth": "SURVIVES",
-  "flaw": "none",
-  "accept_flaws": [
-   "none"
-  ],
-  "template": "A",
-  "kind": "positions",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 610906,
-   "edge": 0.95
-  },
-  "oracle": {
-   "future_blind": "PASS",
-   "backtest": "PASS",
-   "costs": "PASS",
-   "random_entry": "PASS",
-   "stability": "PASS"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_18",
-  "group": "survives",
-  "truth": "SURVIVES",
-  "flaw": "none",
-  "accept_flaws": [
-   "none"
-  ],
-  "template": "A",
-  "kind": "positions",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 490504,
-   "edge": 0.8
-  },
-  "oracle": {
-   "future_blind": "PASS",
-   "backtest": "PASS",
-   "costs": "PASS",
-   "random_entry": "PASS",
-   "stability": "PASS"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_19",
-  "group": "multiple_testing",
-  "truth": "REJECT",
-  "flaw": "multiple_testing",
-  "accept_flaws": [
-   "multiple_testing",
-   "no_edge"
-  ],
-  "template": "F",
-  "kind": "positions",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 472900,
-   "edge": 0.0
-  },
-  "oracle": {
-   "best_of": 232,
-   "sharpe_ann": 1.01,
-   "backtest": "REJECT",
-   "dsr": 0.0609,
-   "pbo": 0.329
-  },
-  "attempts": 1
- },
- {
-  "id": "case_20",
   "group": "leak",
   "truth": "REJECT",
   "flaw": "unpurged_labels",
@@ -477,8 +365,8 @@
   "line": 22,
   "market": {
    "n_days": 400,
-   "seed": 820744,
-   "edge": 0.92
+   "seed": 881704,
+   "edge": 1.01
   },
   "oracle": {
    "future_blind": "PASS"
@@ -486,46 +374,65 @@
   "attempts": 1
  },
  {
-  "id": "case_21",
-  "group": "survives",
-  "truth": "SURVIVES",
-  "flaw": "none",
+  "id": "case_16",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "centered_window",
   "accept_flaws": [
-   "none"
+   "centered_window"
   ],
-  "template": "B",
-  "kind": "brackets",
-  "file": null,
-  "line": null,
+  "template": "D",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 11,
   "market": {
    "n_days": 400,
-   "seed": 59908,
-   "edge": 1.16
+   "seed": 576422,
+   "edge": 1.02
   },
   "oracle": {
-   "future_blind": "PASS",
-   "backtest": "PASS",
-   "costs": "PASS",
-   "random_entry": "PASS",
-   "stability": "PASS"
+   "future_blind": "REJECT"
   },
   "attempts": 1
  },
  {
-  "id": "case_22",
-  "group": "leak",
+  "id": "case_17",
+  "group": "costs",
   "truth": "REJECT",
-  "flaw": "fit_on_full_sample",
+  "flaw": "costs",
   "accept_flaws": [
-   "fit_on_full_sample"
+   "costs"
   ],
-  "template": "C",
+  "template": "A",
   "kind": "positions",
-  "file": "strategy.py",
-  "line": 21,
+  "file": null,
+  "line": null,
   "market": {
    "n_days": 400,
-   "seed": 351322,
+   "seed": 895366,
+   "edge": 0.21
+  },
+  "oracle": {
+   "costs": "REJECT",
+   "gross": 0.3944
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_18",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "htf_resample",
+  "accept_flaws": [
+   "htf_resample"
+  ],
+  "template": "A",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 12,
+  "market": {
+   "n_days": 400,
+   "seed": 480721,
    "edge": 0.0
   },
   "oracle": {
@@ -534,7 +441,7 @@
   "attempts": 1
  },
  {
-  "id": "case_23",
+  "id": "case_19",
   "group": "multiple_testing",
   "truth": "REJECT",
   "flaw": "multiple_testing",
@@ -548,20 +455,20 @@
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 535290,
+   "seed": 913779,
    "edge": 0.0
   },
   "oracle": {
-   "best_of": 229,
-   "sharpe_ann": 0.96,
+   "best_of": 272,
+   "sharpe_ann": 0.92,
    "backtest": "REJECT",
-   "dsr": 0.0248,
-   "pbo": 0.3387
+   "dsr": 0.0281,
+   "pbo": 0.3279
   },
-  "attempts": 1
+  "attempts": 3
  },
  {
-  "id": "case_24",
+  "id": "case_20",
   "group": "no_edge",
   "truth": "REJECT",
   "flaw": "no_edge",
@@ -574,7 +481,96 @@
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 733502,
+   "seed": 478954,
+   "edge": 0.0
+  },
+  "oracle": {
+   "backtest": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_21",
+  "group": "costs",
+  "truth": "REJECT",
+  "flaw": "costs",
+  "accept_flaws": [
+   "costs"
+  ],
+  "template": "B",
+  "kind": "brackets",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 463563,
+   "edge": 0.23
+  },
+  "oracle": {
+   "costs": "REJECT",
+   "gross": 0.1158
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_22",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "centered_window",
+  "accept_flaws": [
+   "centered_window"
+  ],
+  "template": "A",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 11,
+  "market": {
+   "n_days": 400,
+   "seed": 176509,
+   "edge": 0.0
+  },
+  "oracle": {
+   "future_blind": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_23",
+  "group": "no_edge",
+  "truth": "REJECT",
+  "flaw": "no_edge",
+  "accept_flaws": [
+   "no_edge"
+  ],
+  "template": "E",
+  "kind": "positions",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 606585,
+   "edge": 0.0
+  },
+  "oracle": {
+   "backtest": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_24",
+  "group": "no_edge",
+  "truth": "REJECT",
+  "flaw": "no_edge",
+  "accept_flaws": [
+   "no_edge"
+  ],
+  "template": "D",
+  "kind": "positions",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 100782,
    "edge": 0.0
   },
   "oracle": {
@@ -584,6 +580,72 @@
  },
  {
   "id": "case_25",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "selection_on_full_sample",
+  "accept_flaws": [
+   "selection_on_full_sample"
+  ],
+  "template": "D",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 8,
+  "market": {
+   "n_days": 400,
+   "seed": 829248,
+   "edge": 0.0
+  },
+  "oracle": {
+   "future_blind": "PASS"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_26",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "htf_resample",
+  "accept_flaws": [
+   "htf_resample"
+  ],
+  "template": "E",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 11,
+  "market": {
+   "n_days": 400,
+   "seed": 106669,
+   "edge": 0.83
+  },
+  "oracle": {
+   "future_blind": "PASS"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_27",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "lookahead_shift",
+  "accept_flaws": [
+   "lookahead_shift"
+  ],
+  "template": "A",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 11,
+  "market": {
+   "n_days": 400,
+   "seed": 823614,
+   "edge": 0.0
+  },
+  "oracle": {
+   "future_blind": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_28",
   "group": "survives",
   "truth": "SURVIVES",
   "flaw": "none",
@@ -596,82 +658,8 @@
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 34653,
-   "edge": 0.89
-  },
-  "oracle": {
-   "future_blind": "PASS",
-   "backtest": "PASS",
-   "costs": "PASS",
-   "random_entry": "PASS",
-   "stability": "PASS"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_26",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "fit_on_full_sample",
-  "accept_flaws": [
-   "fit_on_full_sample"
-  ],
-  "template": "C3",
-  "kind": "positions",
-  "file": "strategy.py",
-  "line": 22,
-  "market": {
-   "n_days": 400,
-   "seed": 462874,
-   "edge": 0.0
-  },
-  "oracle": {
-   "future_blind": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_27",
-  "group": "survives",
-  "truth": "SURVIVES",
-  "flaw": "none",
-  "accept_flaws": [
-   "none"
-  ],
-  "template": "B",
-  "kind": "brackets",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 19980,
-   "edge": 0.98
-  },
-  "oracle": {
-   "future_blind": "PASS",
-   "backtest": "PASS",
-   "costs": "PASS",
-   "random_entry": "PASS",
-   "stability": "PASS"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_28",
-  "group": "survives",
-  "truth": "SURVIVES",
-  "flaw": "none",
-  "accept_flaws": [
-   "none"
-  ],
-  "template": "A",
-  "kind": "positions",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 256144,
-   "edge": 1.09
+   "seed": 381858,
+   "edge": 1.25
   },
   "oracle": {
    "future_blind": "PASS",
@@ -684,59 +672,11 @@
  },
  {
   "id": "case_29",
-  "group": "leak",
+  "group": "no_edge",
   "truth": "REJECT",
-  "flaw": "fit_on_full_sample",
+  "flaw": "no_edge",
   "accept_flaws": [
-   "fit_on_full_sample"
-  ],
-  "template": "C5",
-  "kind": "positions",
-  "file": "strategy.py",
-  "line": 21,
-  "market": {
-   "n_days": 400,
-   "seed": 385663,
-   "edge": 1.17
-  },
-  "oracle": {
-   "future_blind": "PASS"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_30",
-  "group": "survives",
-  "truth": "SURVIVES",
-  "flaw": "none",
-  "accept_flaws": [
-   "none"
-  ],
-  "template": "A2",
-  "kind": "positions",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 633445,
-   "edge": 1.2
-  },
-  "oracle": {
-   "future_blind": "PASS",
-   "backtest": "PASS",
-   "costs": "PASS",
-   "random_entry": "PASS",
-   "stability": "PASS"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_31",
-  "group": "costs",
-  "truth": "REJECT",
-  "flaw": "costs",
-  "accept_flaws": [
-   "costs"
+   "no_edge"
   ],
   "template": "A",
   "kind": "positions",
@@ -744,12 +684,55 @@
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 62459,
-   "edge": 0.24
+   "seed": 619030,
+   "edge": 0.0
   },
   "oracle": {
-   "costs": "REJECT",
-   "gross": 0.3073
+   "backtest": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_30",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "centered_window",
+  "accept_flaws": [
+   "centered_window"
+  ],
+  "template": "A2",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 20,
+  "market": {
+   "n_days": 400,
+   "seed": 716545,
+   "edge": 0.0
+  },
+  "oracle": {
+   "future_blind": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_31",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "fullsample_stat",
+  "accept_flaws": [
+   "fullsample_stat"
+  ],
+  "template": "E",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 15,
+  "market": {
+   "n_days": 400,
+   "seed": 397755,
+   "edge": 0.88
+  },
+  "oracle": {
+   "future_blind": "REJECT"
   },
   "attempts": 1
  },
@@ -767,8 +750,8 @@
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 972934,
-   "edge": 0.84
+   "seed": 719463,
+   "edge": 1.08
   },
   "oracle": {
    "future_blind": "PASS",
@@ -781,142 +764,19 @@
  },
  {
   "id": "case_33",
-  "group": "survives",
-  "truth": "SURVIVES",
-  "flaw": "none",
-  "accept_flaws": [
-   "none"
-  ],
-  "template": "A2",
-  "kind": "positions",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 299198,
-   "edge": 0.87
-  },
-  "oracle": {
-   "future_blind": "PASS",
-   "backtest": "PASS",
-   "costs": "PASS",
-   "random_entry": "PASS",
-   "stability": "PASS"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_34",
-  "group": "no_edge",
-  "truth": "REJECT",
-  "flaw": "no_edge",
-  "accept_flaws": [
-   "no_edge"
-  ],
-  "template": "A",
-  "kind": "positions",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 170059,
-   "edge": 0.0
-  },
-  "oracle": {
-   "backtest": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_35",
-  "group": "survives",
-  "truth": "SURVIVES",
-  "flaw": "none",
-  "accept_flaws": [
-   "none"
-  ],
-  "template": "C",
-  "kind": "positions",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 710132,
-   "edge": 0.98
-  },
-  "oracle": {
-   "future_blind": "PASS",
-   "backtest": "PASS",
-   "costs": "PASS",
-   "random_entry": "PASS",
-   "stability": "PASS"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_36",
-  "group": "multiple_testing",
-  "truth": "REJECT",
-  "flaw": "multiple_testing",
-  "accept_flaws": [
-   "multiple_testing",
-   "no_edge"
-  ],
-  "template": "D",
-  "kind": "positions",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 965319,
-   "edge": 0.0
-  },
-  "oracle": {
-   "best_of": 207,
-   "sharpe_ann": 0.94,
-   "backtest": "REJECT",
-   "dsr": 0.0301,
-   "pbo": 0.5833
-  },
-  "attempts": 2
- },
- {
-  "id": "case_37",
   "group": "leak",
   "truth": "REJECT",
-  "flaw": "centered_window",
+  "flaw": "fullsample_stat",
   "accept_flaws": [
-   "centered_window"
+   "fullsample_stat"
   ],
-  "template": "E",
+  "template": "A",
   "kind": "positions",
   "file": "strategy.py",
   "line": 11,
   "market": {
    "n_days": 400,
-   "seed": 87812,
-   "edge": 0.85
-  },
-  "oracle": {
-   "future_blind": "PASS"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_38",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "selection_on_full_sample",
-  "accept_flaws": [
-   "selection_on_full_sample"
-  ],
-  "template": "E",
-  "kind": "positions",
-  "file": "strategy.py",
-  "line": 9,
-  "market": {
-   "n_days": 400,
-   "seed": 381320,
+   "seed": 498774,
    "edge": 0.0
   },
   "oracle": {
@@ -925,33 +785,95 @@
   "attempts": 1
  },
  {
-  "id": "case_39",
-  "group": "survives",
-  "truth": "SURVIVES",
-  "flaw": "none",
+  "id": "case_34",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "lookahead_shift",
   "accept_flaws": [
-   "none"
+   "lookahead_shift"
   ],
-  "template": "B",
-  "kind": "brackets",
-  "file": null,
-  "line": null,
+  "template": "D",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 11,
   "market": {
    "n_days": 400,
-   "seed": 815022,
-   "edge": 1.09
+   "seed": 853723,
+   "edge": 0.81
   },
   "oracle": {
-   "future_blind": "PASS",
-   "backtest": "PASS",
-   "costs": "PASS",
-   "random_entry": "PASS",
-   "stability": "PASS"
+   "future_blind": "REJECT"
   },
   "attempts": 1
  },
  {
-  "id": "case_40",
+  "id": "case_35",
+  "group": "no_edge",
+  "truth": "REJECT",
+  "flaw": "no_edge",
+  "accept_flaws": [
+   "no_edge"
+  ],
+  "template": "D",
+  "kind": "positions",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 104654,
+   "edge": 0.0
+  },
+  "oracle": {
+   "backtest": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_36",
+  "group": "no_edge",
+  "truth": "REJECT",
+  "flaw": "no_edge",
+  "accept_flaws": [
+   "no_edge"
+  ],
+  "template": "E",
+  "kind": "positions",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 185954,
+   "edge": 0.9
+  },
+  "oracle": {
+   "backtest": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_37",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "fullsample_stat",
+  "accept_flaws": [
+   "fullsample_stat"
+  ],
+  "template": "C",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 15,
+  "market": {
+   "n_days": 400,
+   "seed": 921003,
+   "edge": 1.12
+  },
+  "oracle": {
+   "future_blind": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_38",
   "group": "leak",
   "truth": "REJECT",
   "flaw": "fit_on_full_sample",
@@ -964,11 +886,55 @@
   "line": 21,
   "market": {
    "n_days": 400,
-   "seed": 516629,
+   "seed": 831776,
    "edge": 0.0
   },
   "oracle": {
    "future_blind": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_39",
+  "group": "no_edge",
+  "truth": "REJECT",
+  "flaw": "no_edge",
+  "accept_flaws": [
+   "no_edge"
+  ],
+  "template": "A",
+  "kind": "positions",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 663490,
+   "edge": 0.0
+  },
+  "oracle": {
+   "backtest": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_40",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "unpurged_labels",
+  "accept_flaws": [
+   "unpurged_labels"
+  ],
+  "template": "C2",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 22,
+  "market": {
+   "n_days": 400,
+   "seed": 148953,
+   "edge": 0.0
+  },
+  "oracle": {
+   "future_blind": "PASS"
   },
   "attempts": 1
  },
@@ -980,14 +946,14 @@
   "accept_flaws": [
    "none"
   ],
-  "template": "A",
+  "template": "C",
   "kind": "positions",
   "file": null,
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 822202,
-   "edge": 0.82
+   "seed": 110949,
+   "edge": 1.09
   },
   "oracle": {
    "future_blind": "PASS",
@@ -1000,6 +966,54 @@
  },
  {
   "id": "case_42",
+  "group": "survives",
+  "truth": "SURVIVES",
+  "flaw": "none",
+  "accept_flaws": [
+   "none"
+  ],
+  "template": "C",
+  "kind": "positions",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 81530,
+   "edge": 0.81
+  },
+  "oracle": {
+   "future_blind": "PASS",
+   "backtest": "PASS",
+   "costs": "PASS",
+   "random_entry": "PASS",
+   "stability": "PASS"
+  },
+  "attempts": 3
+ },
+ {
+  "id": "case_43",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "fullsample_stat",
+  "accept_flaws": [
+   "fullsample_stat"
+  ],
+  "template": "B",
+  "kind": "brackets",
+  "file": "strategy.py",
+  "line": 20,
+  "market": {
+   "n_days": 400,
+   "seed": 327956,
+   "edge": 0.0
+  },
+  "oracle": {
+   "future_blind": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_44",
   "group": "no_edge",
   "truth": "REJECT",
   "flaw": "no_edge",
@@ -1012,59 +1026,11 @@
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 74246,
+   "seed": 934656,
    "edge": 0.9
   },
   "oracle": {
    "backtest": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_43",
-  "group": "no_edge",
-  "truth": "REJECT",
-  "flaw": "no_edge",
-  "accept_flaws": [
-   "no_edge"
-  ],
-  "template": "E",
-  "kind": "positions",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 277432,
-   "edge": 0.0
-  },
-  "oracle": {
-   "backtest": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_44",
-  "group": "survives",
-  "truth": "SURVIVES",
-  "flaw": "none",
-  "accept_flaws": [
-   "none"
-  ],
-  "template": "B",
-  "kind": "brackets",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 77820,
-   "edge": 1.06
-  },
-  "oracle": {
-   "future_blind": "PASS",
-   "backtest": "PASS",
-   "costs": "PASS",
-   "random_entry": "PASS",
-   "stability": "PASS"
   },
   "attempts": 1
  },
@@ -1082,8 +1048,8 @@
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 589441,
-   "edge": 0.91
+   "seed": 756117,
+   "edge": 1.09
   },
   "oracle": {
    "future_blind": "PASS",
@@ -1102,14 +1068,14 @@
   "accept_flaws": [
    "none"
   ],
-  "template": "A2",
-  "kind": "positions",
+  "template": "B",
+  "kind": "brackets",
   "file": null,
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 893818,
-   "edge": 0.98
+   "seed": 543825,
+   "edge": 0.85
   },
   "oracle": {
    "future_blind": "PASS",
@@ -1128,14 +1094,14 @@
   "accept_flaws": [
    "none"
   ],
-  "template": "A",
-  "kind": "positions",
+  "template": "B",
+  "kind": "brackets",
   "file": null,
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 584219,
-   "edge": 1.05
+   "seed": 550648,
+   "edge": 1.29
   },
   "oracle": {
    "future_blind": "PASS",
@@ -1148,32 +1114,11 @@
  },
  {
   "id": "case_48",
-  "group": "leak",
+  "group": "multiple_testing",
   "truth": "REJECT",
-  "flaw": "lookahead_shift",
+  "flaw": "multiple_testing",
   "accept_flaws": [
-   "lookahead_shift"
-  ],
-  "template": "C",
-  "kind": "positions",
-  "file": "strategy.py",
-  "line": 15,
-  "market": {
-   "n_days": 400,
-   "seed": 797390,
-   "edge": 1.13
-  },
-  "oracle": {
-   "future_blind": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_49",
-  "group": "no_edge",
-  "truth": "REJECT",
-  "flaw": "no_edge",
-  "accept_flaws": [
+   "multiple_testing",
    "no_edge"
   ],
   "template": "D",
@@ -1182,16 +1127,164 @@
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 834705,
+   "seed": 636332,
    "edge": 0.0
   },
   "oracle": {
-   "backtest": "REJECT"
+   "best_of": 161,
+   "sharpe_ann": 0.72,
+   "backtest": "REJECT",
+   "dsr": 0.0187,
+   "pbo": 0.2781
+  },
+  "attempts": 2
+ },
+ {
+  "id": "case_49",
+  "group": "survives",
+  "truth": "SURVIVES",
+  "flaw": "none",
+  "accept_flaws": [
+   "none"
+  ],
+  "template": "A2",
+  "kind": "positions",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 862266,
+   "edge": 0.87
+  },
+  "oracle": {
+   "future_blind": "PASS",
+   "backtest": "PASS",
+   "costs": "PASS",
+   "random_entry": "PASS",
+   "stability": "PASS"
   },
   "attempts": 1
  },
  {
   "id": "case_50",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "selection_on_full_sample",
+  "accept_flaws": [
+   "selection_on_full_sample"
+  ],
+  "template": "E",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 9,
+  "market": {
+   "n_days": 400,
+   "seed": 913920,
+   "edge": 0.0
+  },
+  "oracle": {
+   "future_blind": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_51",
+  "group": "survives",
+  "truth": "SURVIVES",
+  "flaw": "none",
+  "accept_flaws": [
+   "none"
+  ],
+  "template": "B",
+  "kind": "brackets",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 588987,
+   "edge": 1.15
+  },
+  "oracle": {
+   "future_blind": "PASS",
+   "backtest": "PASS",
+   "costs": "PASS",
+   "random_entry": "PASS",
+   "stability": "PASS"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_52",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "unpurged_labels",
+  "accept_flaws": [
+   "unpurged_labels"
+  ],
+  "template": "C",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 22,
+  "market": {
+   "n_days": 400,
+   "seed": 769027,
+   "edge": 0.0
+  },
+  "oracle": {
+   "future_blind": "PASS"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_53",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "htf_resample",
+  "accept_flaws": [
+   "htf_resample"
+  ],
+  "template": "D",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 13,
+  "market": {
+   "n_days": 400,
+   "seed": 99381,
+   "edge": 0.0
+  },
+  "oracle": {
+   "future_blind": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_54",
+  "group": "survives",
+  "truth": "SURVIVES",
+  "flaw": "none",
+  "accept_flaws": [
+   "none"
+  ],
+  "template": "C",
+  "kind": "positions",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 161742,
+   "edge": 1.23
+  },
+  "oracle": {
+   "future_blind": "PASS",
+   "backtest": "PASS",
+   "costs": "PASS",
+   "random_entry": "PASS",
+   "stability": "PASS"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_55",
   "group": "multiple_testing",
   "truth": "REJECT",
   "flaw": "multiple_testing",
@@ -1205,139 +1298,15 @@
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 246336,
+   "seed": 600593,
    "edge": 0.0
   },
   "oracle": {
-   "best_of": 221,
-   "sharpe_ann": 0.88,
+   "best_of": 248,
+   "sharpe_ann": 0.97,
    "backtest": "REJECT",
-   "dsr": 0.0452,
-   "pbo": 0.4773
-  },
-  "attempts": 1
- },
- {
-  "id": "case_51",
-  "group": "survives",
-  "truth": "SURVIVES",
-  "flaw": "none",
-  "accept_flaws": [
-   "none"
-  ],
-  "template": "C",
-  "kind": "positions",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 14158,
-   "edge": 0.93
-  },
-  "oracle": {
-   "future_blind": "PASS",
-   "backtest": "PASS",
-   "costs": "PASS",
-   "random_entry": "PASS",
-   "stability": "PASS"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_52",
-  "group": "survives",
-  "truth": "SURVIVES",
-  "flaw": "none",
-  "accept_flaws": [
-   "none"
-  ],
-  "template": "A2",
-  "kind": "positions",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 308401,
-   "edge": 0.91
-  },
-  "oracle": {
-   "future_blind": "PASS",
-   "backtest": "PASS",
-   "costs": "PASS",
-   "random_entry": "PASS",
-   "stability": "PASS"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_53",
-  "group": "multiple_testing",
-  "truth": "REJECT",
-  "flaw": "multiple_testing",
-  "accept_flaws": [
-   "multiple_testing",
-   "no_edge"
-  ],
-  "template": "D",
-  "kind": "positions",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 546357,
-   "edge": 0.0
-  },
-  "oracle": {
-   "best_of": 247,
-   "sharpe_ann": 1.01,
-   "backtest": "REJECT",
-   "dsr": 0.0189,
-   "pbo": 0.4156
-  },
-  "attempts": 1
- },
- {
-  "id": "case_54",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "unpurged_labels",
-  "accept_flaws": [
-   "unpurged_labels"
-  ],
-  "template": "C",
-  "kind": "positions",
-  "file": "strategy.py",
-  "line": 22,
-  "market": {
-   "n_days": 400,
-   "seed": 189934,
-   "edge": 0.0
-  },
-  "oracle": {
-   "future_blind": "PASS"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_55",
-  "group": "costs",
-  "truth": "REJECT",
-  "flaw": "costs",
-  "accept_flaws": [
-   "costs"
-  ],
-  "template": "A",
-  "kind": "positions",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 874387,
-   "edge": 0.22
-  },
-  "oracle": {
-   "costs": "REJECT",
-   "gross": 0.19
+   "dsr": 0.0521,
+   "pbo": 0.5281
   },
   "attempts": 1
  },
@@ -1349,14 +1318,14 @@
   "accept_flaws": [
    "none"
   ],
-  "template": "C",
+  "template": "A",
   "kind": "positions",
   "file": null,
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 128828,
-   "edge": 1.16
+   "seed": 972755,
+   "edge": 1.15
   },
   "oracle": {
    "future_blind": "PASS",
@@ -1371,183 +1340,6 @@
   "id": "case_57",
   "group": "leak",
   "truth": "REJECT",
-  "flaw": "fit_on_full_sample",
-  "accept_flaws": [
-   "fit_on_full_sample"
-  ],
-  "template": "C4",
-  "kind": "positions",
-  "file": "strategy.py",
-  "line": 21,
-  "market": {
-   "n_days": 400,
-   "seed": 279043,
-   "edge": 0.81
-  },
-  "oracle": {
-   "future_blind": "PASS"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_58",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "selection_on_full_sample",
-  "accept_flaws": [
-   "selection_on_full_sample"
-  ],
-  "template": "A2",
-  "kind": "positions",
-  "file": "strategy.py",
-  "line": 35,
-  "market": {
-   "n_days": 400,
-   "seed": 448991,
-   "edge": 0.0
-  },
-  "oracle": {
-   "future_blind": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_59",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "htf_resample",
-  "accept_flaws": [
-   "htf_resample"
-  ],
-  "template": "D",
-  "kind": "positions",
-  "file": "strategy.py",
-  "line": 13,
-  "market": {
-   "n_days": 400,
-   "seed": 273002,
-   "edge": 0.0
-  },
-  "oracle": {
-   "future_blind": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_60",
-  "group": "no_edge",
-  "truth": "REJECT",
-  "flaw": "no_edge",
-  "accept_flaws": [
-   "no_edge"
-  ],
-  "template": "E",
-  "kind": "positions",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 213136,
-   "edge": 0.9
-  },
-  "oracle": {
-   "backtest": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_61",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "htf_resample",
-  "accept_flaws": [
-   "htf_resample"
-  ],
-  "template": "E",
-  "kind": "positions",
-  "file": "strategy.py",
-  "line": 11,
-  "market": {
-   "n_days": 400,
-   "seed": 348036,
-   "edge": 0.9
-  },
-  "oracle": {
-   "future_blind": "PASS"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_62",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "fullsample_stat",
-  "accept_flaws": [
-   "fullsample_stat"
-  ],
-  "template": "A2",
-  "kind": "positions",
-  "file": "strategy.py",
-  "line": 20,
-  "market": {
-   "n_days": 400,
-   "seed": 149194,
-   "edge": 0.0
-  },
-  "oracle": {
-   "future_blind": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_63",
-  "group": "costs",
-  "truth": "REJECT",
-  "flaw": "costs",
-  "accept_flaws": [
-   "costs"
-  ],
-  "template": "B",
-  "kind": "brackets",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 242740,
-   "edge": 0.23
-  },
-  "oracle": {
-   "costs": "REJECT",
-   "gross": 0.0929
-  },
-  "attempts": 1
- },
- {
-  "id": "case_64",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "lookahead_shift",
-  "accept_flaws": [
-   "lookahead_shift"
-  ],
-  "template": "B",
-  "kind": "brackets",
-  "file": "strategy.py",
-  "line": 14,
-  "market": {
-   "n_days": 400,
-   "seed": 751808,
-   "edge": 0.0
-  },
-  "oracle": {
-   "future_blind": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_65",
-  "group": "leak",
-  "truth": "REJECT",
   "flaw": "htf_resample",
   "accept_flaws": [
    "htf_resample"
@@ -1558,74 +1350,8 @@
   "line": 23,
   "market": {
    "n_days": 400,
-   "seed": 598543,
+   "seed": 104715,
    "edge": 0.0
-  },
-  "oracle": {
-   "future_blind": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_66",
-  "group": "no_edge",
-  "truth": "REJECT",
-  "flaw": "no_edge",
-  "accept_flaws": [
-   "no_edge"
-  ],
-  "template": "E",
-  "kind": "positions",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 550765,
-   "edge": 0.0
-  },
-  "oracle": {
-   "backtest": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_67",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "centered_window",
-  "accept_flaws": [
-   "centered_window"
-  ],
-  "template": "D",
-  "kind": "positions",
-  "file": "strategy.py",
-  "line": 11,
-  "market": {
-   "n_days": 400,
-   "seed": 634039,
-   "edge": 0.96
-  },
-  "oracle": {
-   "future_blind": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_68",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "selection_on_full_sample",
-  "accept_flaws": [
-   "selection_on_full_sample"
-  ],
-  "template": "E2",
-  "kind": "positions",
-  "file": "strategy.py",
-  "line": 9,
-  "market": {
-   "n_days": 400,
-   "seed": 952435,
-   "edge": 0.87
   },
   "oracle": {
    "future_blind": "PASS"
@@ -1633,29 +1359,7 @@
   "attempts": 1
  },
  {
-  "id": "case_69",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "fullsample_stat",
-  "accept_flaws": [
-   "fullsample_stat"
-  ],
-  "template": "E",
-  "kind": "positions",
-  "file": "strategy.py",
-  "line": 15,
-  "market": {
-   "n_days": 400,
-   "seed": 940765,
-   "edge": 1.18
-  },
-  "oracle": {
-   "future_blind": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_70",
+  "id": "case_58",
   "group": "survives",
   "truth": "SURVIVES",
   "flaw": "none",
@@ -1668,8 +1372,8 @@
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 233959,
-   "edge": 1.16
+   "seed": 718648,
+   "edge": 0.98
   },
   "oracle": {
    "future_blind": "PASS",
@@ -1681,196 +1385,39 @@
   "attempts": 1
  },
  {
-  "id": "case_71",
-  "group": "leak",
+  "id": "case_59",
+  "group": "multiple_testing",
   "truth": "REJECT",
-  "flaw": "centered_window",
+  "flaw": "multiple_testing",
   "accept_flaws": [
-   "centered_window"
-  ],
-  "template": "A",
-  "kind": "positions",
-  "file": "strategy.py",
-  "line": 11,
-  "market": {
-   "n_days": 400,
-   "seed": 672213,
-   "edge": 0.0
-  },
-  "oracle": {
-   "future_blind": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_72",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "unpurged_labels",
-  "accept_flaws": [
-   "unpurged_labels"
-  ],
-  "template": "C2",
-  "kind": "positions",
-  "file": "strategy.py",
-  "line": 22,
-  "market": {
-   "n_days": 400,
-   "seed": 161068,
-   "edge": 0.0
-  },
-  "oracle": {
-   "future_blind": "PASS"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_73",
-  "group": "survives",
-  "truth": "SURVIVES",
-  "flaw": "none",
-  "accept_flaws": [
-   "none"
-  ],
-  "template": "C",
-  "kind": "positions",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 743126,
-   "edge": 1.2
-  },
-  "oracle": {
-   "future_blind": "PASS",
-   "backtest": "PASS",
-   "costs": "PASS",
-   "random_entry": "PASS",
-   "stability": "PASS"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_74",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "centered_window",
-  "accept_flaws": [
-   "centered_window"
-  ],
-  "template": "A2",
-  "kind": "positions",
-  "file": "strategy.py",
-  "line": 20,
-  "market": {
-   "n_days": 400,
-   "seed": 508162,
-   "edge": 0.0
-  },
-  "oracle": {
-   "future_blind": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_75",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "unpurged_labels",
-  "accept_flaws": [
-   "unpurged_labels"
-  ],
-  "template": "C4",
-  "kind": "positions",
-  "file": "strategy.py",
-  "line": 22,
-  "market": {
-   "n_days": 400,
-   "seed": 862856,
-   "edge": 1.14
-  },
-  "oracle": {
-   "future_blind": "PASS"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_76",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "selection_on_full_sample",
-  "accept_flaws": [
-   "selection_on_full_sample"
+   "multiple_testing",
+   "no_edge"
   ],
   "template": "D",
   "kind": "positions",
-  "file": "strategy.py",
-  "line": 8,
-  "market": {
-   "n_days": 400,
-   "seed": 367747,
-   "edge": 0.0
-  },
-  "oracle": {
-   "future_blind": "PASS"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_77",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "fullsample_stat",
-  "accept_flaws": [
-   "fullsample_stat"
-  ],
-  "template": "C",
-  "kind": "positions",
-  "file": "strategy.py",
-  "line": 15,
-  "market": {
-   "n_days": 400,
-   "seed": 474700,
-   "edge": 1.04
-  },
-  "oracle": {
-   "future_blind": "REJECT"
-  },
-  "attempts": 1
- },
- {
-  "id": "case_78",
-  "group": "survives",
-  "truth": "SURVIVES",
-  "flaw": "none",
-  "accept_flaws": [
-   "none"
-  ],
-  "template": "C",
-  "kind": "positions",
   "file": null,
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 438560,
-   "edge": 1.28
+   "seed": 612152,
+   "edge": 0.0
   },
   "oracle": {
-   "future_blind": "PASS",
-   "backtest": "PASS",
-   "costs": "PASS",
-   "random_entry": "PASS",
-   "stability": "PASS"
+   "best_of": 273,
+   "sharpe_ann": 1.09,
+   "backtest": "REJECT",
+   "dsr": 0.0353,
+   "pbo": 0.6623
   },
   "attempts": 1
  },
  {
-  "id": "case_79",
-  "group": "no_edge",
+  "id": "case_60",
+  "group": "costs",
   "truth": "REJECT",
-  "flaw": "no_edge",
+  "flaw": "costs",
   "accept_flaws": [
-   "no_edge"
+   "costs"
   ],
   "template": "A",
   "kind": "positions",
@@ -1878,30 +1425,31 @@
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 826367,
-   "edge": 0.0
+   "seed": 682558,
+   "edge": 0.16
   },
   "oracle": {
-   "backtest": "REJECT"
+   "costs": "REJECT",
+   "gross": 0.141
   },
   "attempts": 1
  },
  {
-  "id": "case_80",
+  "id": "case_61",
   "group": "survives",
   "truth": "SURVIVES",
   "flaw": "none",
   "accept_flaws": [
    "none"
   ],
-  "template": "B",
-  "kind": "brackets",
+  "template": "A2",
+  "kind": "positions",
   "file": null,
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 872837,
-   "edge": 0.88
+   "seed": 604563,
+   "edge": 1.11
   },
   "oracle": {
    "future_blind": "PASS",
@@ -1913,20 +1461,20 @@
   "attempts": 1
  },
  {
-  "id": "case_81",
+  "id": "case_62",
   "group": "survives",
   "truth": "SURVIVES",
   "flaw": "none",
   "accept_flaws": [
    "none"
   ],
-  "template": "C",
+  "template": "A",
   "kind": "positions",
   "file": null,
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 432373,
+   "seed": 605468,
    "edge": 0.81
   },
   "oracle": {
@@ -1939,21 +1487,131 @@
   "attempts": 1
  },
  {
-  "id": "case_82",
+  "id": "case_63",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "lookahead_shift",
+  "accept_flaws": [
+   "lookahead_shift"
+  ],
+  "template": "C",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 15,
+  "market": {
+   "n_days": 400,
+   "seed": 333309,
+   "edge": 1.03
+  },
+  "oracle": {
+   "future_blind": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_64",
+  "group": "no_edge",
+  "truth": "REJECT",
+  "flaw": "no_edge",
+  "accept_flaws": [
+   "no_edge"
+  ],
+  "template": "E",
+  "kind": "positions",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 793990,
+   "edge": 0.0
+  },
+  "oracle": {
+   "backtest": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_65",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "fit_on_full_sample",
+  "accept_flaws": [
+   "fit_on_full_sample"
+  ],
+  "template": "C4",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 21,
+  "market": {
+   "n_days": 400,
+   "seed": 68429,
+   "edge": 1.05
+  },
+  "oracle": {
+   "future_blind": "PASS"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_66",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "fit_on_full_sample",
+  "accept_flaws": [
+   "fit_on_full_sample"
+  ],
+  "template": "C3",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 22,
+  "market": {
+   "n_days": 400,
+   "seed": 215503,
+   "edge": 0.0
+  },
+  "oracle": {
+   "future_blind": "PASS"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_67",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "fit_on_full_sample",
+  "accept_flaws": [
+   "fit_on_full_sample"
+  ],
+  "template": "C",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 21,
+  "market": {
+   "n_days": 400,
+   "seed": 862657,
+   "edge": 0.0
+  },
+  "oracle": {
+   "future_blind": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_68",
   "group": "survives",
   "truth": "SURVIVES",
   "flaw": "none",
   "accept_flaws": [
    "none"
   ],
-  "template": "A2",
-  "kind": "positions",
+  "template": "B",
+  "kind": "brackets",
   "file": null,
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 430215,
-   "edge": 1.14
+   "seed": 936289,
+   "edge": 1.17
   },
   "oracle": {
    "future_blind": "PASS",
@@ -1965,29 +1623,29 @@
   "attempts": 1
  },
  {
-  "id": "case_83",
+  "id": "case_69",
   "group": "leak",
   "truth": "REJECT",
-  "flaw": "fullsample_stat",
+  "flaw": "unpurged_labels",
   "accept_flaws": [
-   "fullsample_stat"
+   "unpurged_labels"
   ],
-  "template": "B",
-  "kind": "brackets",
+  "template": "C4",
+  "kind": "positions",
   "file": "strategy.py",
-  "line": 20,
+  "line": 22,
   "market": {
    "n_days": 400,
-   "seed": 398656,
-   "edge": 0.0
+   "seed": 980097,
+   "edge": 1.12
   },
   "oracle": {
-   "future_blind": "REJECT"
+   "future_blind": "PASS"
   },
   "attempts": 1
  },
  {
-  "id": "case_84",
+  "id": "case_70",
   "group": "leak",
   "truth": "REJECT",
   "flaw": "unpurged_labels",
@@ -2000,13 +1658,356 @@
   "line": 22,
   "market": {
    "n_days": 400,
-   "seed": 496432,
+   "seed": 475968,
    "edge": 0.0
   },
   "oracle": {
    "future_blind": "PASS"
   },
   "attempts": 1
+ },
+ {
+  "id": "case_71",
+  "group": "survives",
+  "truth": "SURVIVES",
+  "flaw": "none",
+  "accept_flaws": [
+   "none"
+  ],
+  "template": "B",
+  "kind": "brackets",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 265080,
+   "edge": 1.17
+  },
+  "oracle": {
+   "future_blind": "PASS",
+   "backtest": "PASS",
+   "costs": "PASS",
+   "random_entry": "PASS",
+   "stability": "PASS"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_72",
+  "group": "costs",
+  "truth": "REJECT",
+  "flaw": "costs",
+  "accept_flaws": [
+   "costs"
+  ],
+  "template": "A2",
+  "kind": "positions",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 329344,
+   "edge": 0.2
+  },
+  "oracle": {
+   "costs": "REJECT",
+   "gross": 0.4635
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_73",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "selection_on_full_sample",
+  "accept_flaws": [
+   "selection_on_full_sample"
+  ],
+  "template": "D2",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 8,
+  "market": {
+   "n_days": 400,
+   "seed": 173234,
+   "edge": 0.85
+  },
+  "oracle": {
+   "future_blind": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_74",
+  "group": "survives",
+  "truth": "SURVIVES",
+  "flaw": "none",
+  "accept_flaws": [
+   "none"
+  ],
+  "template": "A2",
+  "kind": "positions",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 312728,
+   "edge": 1.28
+  },
+  "oracle": {
+   "future_blind": "PASS",
+   "backtest": "PASS",
+   "costs": "PASS",
+   "random_entry": "PASS",
+   "stability": "PASS"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_75",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "lookahead_shift",
+  "accept_flaws": [
+   "lookahead_shift"
+  ],
+  "template": "A2",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 20,
+  "market": {
+   "n_days": 400,
+   "seed": 416210,
+   "edge": 0.0
+  },
+  "oracle": {
+   "future_blind": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_76",
+  "group": "survives",
+  "truth": "SURVIVES",
+  "flaw": "none",
+  "accept_flaws": [
+   "none"
+  ],
+  "template": "A",
+  "kind": "positions",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 495766,
+   "edge": 1.05
+  },
+  "oracle": {
+   "future_blind": "PASS",
+   "backtest": "PASS",
+   "costs": "PASS",
+   "random_entry": "PASS",
+   "stability": "PASS"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_77",
+  "group": "survives",
+  "truth": "SURVIVES",
+  "flaw": "none",
+  "accept_flaws": [
+   "none"
+  ],
+  "template": "A2",
+  "kind": "positions",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 45731,
+   "edge": 1.26
+  },
+  "oracle": {
+   "future_blind": "PASS",
+   "backtest": "PASS",
+   "costs": "PASS",
+   "random_entry": "PASS",
+   "stability": "PASS"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_78",
+  "group": "costs",
+  "truth": "REJECT",
+  "flaw": "costs",
+  "accept_flaws": [
+   "costs"
+  ],
+  "template": "B",
+  "kind": "brackets",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 856214,
+   "edge": 0.24
+  },
+  "oracle": {
+   "costs": "REJECT",
+   "gross": 0.055
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_79",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "lookahead_shift",
+  "accept_flaws": [
+   "lookahead_shift"
+  ],
+  "template": "B",
+  "kind": "brackets",
+  "file": "strategy.py",
+  "line": 14,
+  "market": {
+   "n_days": 400,
+   "seed": 324504,
+   "edge": 0.0
+  },
+  "oracle": {
+   "future_blind": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_80",
+  "group": "multiple_testing",
+  "truth": "REJECT",
+  "flaw": "multiple_testing",
+  "accept_flaws": [
+   "multiple_testing",
+   "no_edge"
+  ],
+  "template": "F",
+  "kind": "positions",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 866190,
+   "edge": 0.0
+  },
+  "oracle": {
+   "best_of": 227,
+   "sharpe_ann": 1.1,
+   "backtest": "REJECT",
+   "dsr": 0.0758,
+   "pbo": 0.3149
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_81",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "htf_resample",
+  "accept_flaws": [
+   "htf_resample"
+  ],
+  "template": "B",
+  "kind": "brackets",
+  "file": "strategy.py",
+  "line": 14,
+  "market": {
+   "n_days": 400,
+   "seed": 129699,
+   "edge": 1.18
+  },
+  "oracle": {
+   "future_blind": "REJECT"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_82",
+  "group": "survives",
+  "truth": "SURVIVES",
+  "flaw": "none",
+  "accept_flaws": [
+   "none"
+  ],
+  "template": "C",
+  "kind": "positions",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 367211,
+   "edge": 1.05
+  },
+  "oracle": {
+   "future_blind": "PASS",
+   "backtest": "PASS",
+   "costs": "PASS",
+   "random_entry": "PASS",
+   "stability": "PASS"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_83",
+  "group": "survives",
+  "truth": "SURVIVES",
+  "flaw": "none",
+  "accept_flaws": [
+   "none"
+  ],
+  "template": "C",
+  "kind": "positions",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 185651,
+   "edge": 1.01
+  },
+  "oracle": {
+   "future_blind": "PASS",
+   "backtest": "PASS",
+   "costs": "PASS",
+   "random_entry": "PASS",
+   "stability": "PASS"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_84",
+  "group": "survives",
+  "truth": "SURVIVES",
+  "flaw": "none",
+  "accept_flaws": [
+   "none"
+  ],
+  "template": "A2",
+  "kind": "positions",
+  "file": null,
+  "line": null,
+  "market": {
+   "n_days": 400,
+   "seed": 472900,
+   "edge": 0.82
+  },
+  "oracle": {
+   "future_blind": "PASS",
+   "backtest": "PASS",
+   "costs": "PASS",
+   "random_entry": "PASS",
+   "stability": "PASS"
+  },
+  "attempts": 4
  },
  {
   "id": "case_85",
@@ -2022,8 +2023,8 @@
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 374290,
-   "edge": 1.17
+   "seed": 632152,
+   "edge": 0.8
   },
   "oracle": {
    "future_blind": "PASS",
@@ -2042,14 +2043,14 @@
   "accept_flaws": [
    "selection_on_full_sample"
   ],
-  "template": "D2",
+  "template": "E2",
   "kind": "positions",
   "file": "strategy.py",
-  "line": 8,
+  "line": 9,
   "market": {
    "n_days": 400,
-   "seed": 492619,
-   "edge": 0.98
+   "seed": 820744,
+   "edge": 0.81
   },
   "oracle": {
    "future_blind": "REJECT"
@@ -2058,33 +2059,50 @@
  },
  {
   "id": "case_87",
-  "group": "multiple_testing",
+  "group": "no_edge",
   "truth": "REJECT",
-  "flaw": "multiple_testing",
+  "flaw": "no_edge",
   "accept_flaws": [
-   "multiple_testing",
    "no_edge"
   ],
-  "template": "D",
-  "kind": "positions",
+  "template": "B",
+  "kind": "brackets",
   "file": null,
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 657256,
+   "seed": 59908,
    "edge": 0.0
   },
   "oracle": {
-   "best_of": 276,
-   "sharpe_ann": 1.41,
-   "backtest": "REJECT",
-   "dsr": 0.0836,
-   "pbo": 0.21
+   "backtest": "REJECT"
   },
   "attempts": 1
  },
  {
   "id": "case_88",
+  "group": "leak",
+  "truth": "REJECT",
+  "flaw": "fit_on_full_sample",
+  "accept_flaws": [
+   "fit_on_full_sample"
+  ],
+  "template": "C5",
+  "kind": "positions",
+  "file": "strategy.py",
+  "line": 21,
+  "market": {
+   "n_days": 400,
+   "seed": 351322,
+   "edge": 0.81
+  },
+  "oracle": {
+   "future_blind": "PASS"
+  },
+  "attempts": 1
+ },
+ {
+  "id": "case_89",
   "group": "multiple_testing",
   "truth": "REJECT",
   "flaw": "multiple_testing",
@@ -2098,60 +2116,42 @@
   "line": null,
   "market": {
    "n_days": 400,
-   "seed": 690178,
+   "seed": 535290,
    "edge": 0.0
   },
   "oracle": {
-   "best_of": 160,
-   "sharpe_ann": 2.09,
+   "best_of": 229,
+   "sharpe_ann": 2.03,
    "backtest": "PASS",
-   "dsr": 0.4766,
-   "pbo": 0.0487
-  },
-  "attempts": 1
- },
- {
-  "id": "case_89",
-  "group": "no_edge",
-  "truth": "REJECT",
-  "flaw": "no_edge",
-  "accept_flaws": [
-   "no_edge"
-  ],
-  "template": "D",
-  "kind": "positions",
-  "file": null,
-  "line": null,
-  "market": {
-   "n_days": 400,
-   "seed": 800196,
-   "edge": 0.0
-  },
-  "oracle": {
-   "backtest": "REJECT"
+   "dsr": 0.3981,
+   "pbo": 0.0303
   },
   "attempts": 1
  },
  {
   "id": "case_90",
-  "group": "leak",
-  "truth": "REJECT",
-  "flaw": "lookahead_shift",
+  "group": "survives",
+  "truth": "SURVIVES",
+  "flaw": "none",
   "accept_flaws": [
-   "lookahead_shift"
+   "none"
   ],
-  "template": "A2",
+  "template": "A",
   "kind": "positions",
-  "file": "strategy.py",
-  "line": 20,
+  "file": null,
+  "line": null,
   "market": {
    "n_days": 400,
-   "seed": 146510,
-   "edge": 0.0
+   "seed": 34653,
+   "edge": 0.8
   },
   "oracle": {
-   "future_blind": "REJECT"
+   "future_blind": "PASS",
+   "backtest": "PASS",
+   "costs": "PASS",
+   "random_entry": "PASS",
+   "stability": "PASS"
   },
-  "attempts": 1
+  "attempts": 2
  }
 ]

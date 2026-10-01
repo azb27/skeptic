@@ -19,7 +19,7 @@ def positions(bars: pd.DataFrame, params: dict) -> pd.Series:
     out = np.zeros(n)
     beta = 0.0
     for start in range(every, n, every):
-        train = np.arange(0, start)
+        train = np.arange(0, start - hold)  # labels must end before the refit bar
         m = gate[train] & ~np.isnan(label[train])
         if m.sum() > 30:
             beta = float(np.dot(x[train][m], label[train][m]) / np.dot(x[train][m], x[train][m]))

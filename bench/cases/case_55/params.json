@@ -1,7 +1,7 @@
 {
   "params": {
-    "k": 2.7,
-    "span": 138,
-    "hold": 4
+    "start": 2,
+    "end": 8,
+    "side": 1
   }
 }

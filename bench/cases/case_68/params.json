@@ -1,6 +1,8 @@
 {
   "params": {
-    "window": 24,
-    "hold": 24
+    "k": 2.25,
+    "span": 100,
+    "stop_mult": 2.5,
+    "cooldown": 8
   }
 }

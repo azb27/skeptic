@@ -1,6 +1,6 @@
 {
   "params": {
-    "fast": 10,
-    "slow": 100
+    "window": 48,
+    "hold": 24
   }
 }

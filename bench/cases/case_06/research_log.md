@@ -1,5 +1,5 @@
 # Research notes
 
-- Idea: large moves partially retrace; hold the counter-trade for a few bars
-- Parameters were set from first principles and not tuned: {'k': 2.76, 'span': 96, 'hold': 5}.
-- Backtested on 400 trading days of 5-minute bars, positions filled at the next bar's open.
+- Idea: trend following with an EMA crossover
+- We searched a parameter grid (listed in params.json, 279 combinations) and kept the best by Sharpe after costs.
+- Chosen: {'fast': 240, 'slow': 1400}. Annualised Sharpe after a $0.50 spread: 1.21.

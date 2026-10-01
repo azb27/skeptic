@@ -1,5 +1,5 @@
 # Research notes
 
-- Idea: trend following with an EMA crossover
-- Parameters were set from first principles and not tuned: {'fast': 30, 'slow': 150}.
+- Idea: learn the size of post-shock reversals with a regression refitted on an expanding window
+- Parameters are round values chosen before the first backtest and not changed afterwards: {'k': 3.0, 'hold': 4, 'span': 150}.
 - Backtested on 400 trading days of 5-minute bars, positions filled at the next bar's open.

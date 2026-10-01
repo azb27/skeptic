@@ -1,7 +1,7 @@
 {
   "params": {
-    "start": 3,
-    "end": 9,
-    "side": -1
+    "k": 3.5,
+    "hold": 6,
+    "span": 120
   }
 }

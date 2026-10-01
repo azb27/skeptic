@@ -1,6 +1,7 @@
 {
   "params": {
-    "window": 24,
-    "hold": 12
+    "k": 2.25,
+    "span": 100,
+    "hold": 6
   }
 }

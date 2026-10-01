@@ -1,6 +1,5 @@
 # Research notes
 
-- Idea: channel breakout with a fixed holding period
-- All features use past data only. Walk-forward style: no tuning on the test period.
-- Results looked strong across the whole sample, so we did not split it further.
-- Parameters: {'window': 96, 'hold': 12}.
+- Idea: large moves partially retrace; hold the counter-trade for a few bars
+- Parameters are round values chosen before the first backtest and not changed afterwards: {'k': 2.5, 'span': 80, 'hold': 4}.
+- Backtested on 400 trading days of 5-minute bars, positions filled at the next bar's open.

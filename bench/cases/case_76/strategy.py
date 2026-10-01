@@ -1,16 +1,18 @@
-"""Trend following: long when the fast EMA is above the slow EMA, short when below."""
+"""Fade large bars: when a bar moves far more than recent volatility, bet on a partial reversal."""
 
 import numpy as np
 import pandas as pd
 
 
 def positions(bars: pd.DataFrame, params: dict) -> pd.Series:
-    best = max((10, 20, 40), key=lambda f: float((np.sign(bars["close"].ewm(span=f).mean() - bars["close"].ewm(span=100).mean()).shift(1) * bars["close"].diff()).sum()))
-    params = {**params, "fast": best}
-    fast = params.get("fast", 20)
-    slow = params.get("slow", 100)
-    px = bars["close"]
-    f = px.ewm(span=fast, adjust=False).mean()
-    s = px.ewm(span=slow, adjust=False).mean()
-    pos = np.sign(f - s)
-    return pd.Series(pos, index=bars.index).fillna(0)
+    k = params.get("k", 2.5)
+    hold = params.get("hold", 6)
+    ret = bars["close"].diff()
+    vol = ret.abs().ewm(span=params.get("span", 100), adjust=False).mean().shift(1)
+    hourly = bars["close"].resample("1h", label="right", closed="left").last()
+    trend = np.sign(hourly.diff()).reindex(bars.index, method="ffill").fillna(0)
+    shock = ret.abs() > k * vol * 1.25
+    side = pd.Series(0.0, index=bars.index)
+    side[shock] = -np.sign(ret[shock])
+    side[(side != 0) & (side == trend)] = 0  # only fade moves against the hourly trend
+    return side.replace(0, np.nan).ffill(limit=hold - 1).fillna(0)

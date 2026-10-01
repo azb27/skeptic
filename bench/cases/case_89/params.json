@@ -1,6 +1,7 @@
 {
   "params": {
-    "fast": 20,
-    "slow": 100
+    "start": 5,
+    "end": 10,
+    "side": 1
   }
 }

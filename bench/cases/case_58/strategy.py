@@ -20,7 +20,8 @@ class ShockReversal:
         return moves.abs().ewm(span=self.lookback, adjust=False).mean().shift(1)
 
     def trend_filter(self, bars: pd.DataFrame) -> pd.Series:
-        return pd.Series(1.0, index=bars.index)
+        hourly = bars["close"].resample("1h", label="right", closed="left").last()
+        return np.sign(hourly.diff()).reindex(bars.index, method="ffill").fillna(0)
 
     def signal(self, bars: pd.DataFrame) -> pd.Series:
         moves = bars["close"].diff()
@@ -28,16 +29,11 @@ class ShockReversal:
         big = moves.abs() > self.threshold * scale * 1.25
         direction = pd.Series(0.0, index=bars.index)
         direction[big] = -np.sign(moves[big])
+        trend = self.trend_filter(bars)
+        direction[(direction != 0) & (direction == trend)] = 0
         return direction.replace(0, np.nan).ffill(limit=self.horizon - 1).fillna(0)
 
 
 def positions(bars: pd.DataFrame, params: dict) -> pd.Series:
-    best, best_pnl = 2.5, -np.inf
-    for k in (2.0, 2.5, 3.0, 3.5):
-        trial = ShockReversal(k, params.get("hold", 6), params.get("span", 100)).signal(bars)
-        pnl = float((trial.shift(1) * bars["close"].diff()).sum())
-        if pnl > best_pnl:
-            best, best_pnl = k, pnl
-    params = {**params, "k": best}
     model = ShockReversal(params.get("k", 2.5), params.get("hold", 6), params.get("span", 100))
     return model.signal(bars)

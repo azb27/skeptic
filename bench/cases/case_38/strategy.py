@@ -1,21 +1,24 @@
-"""Channel breakout: go long on a close above the prior N-bar high, short below the prior N-bar low,
-and exit after a fixed number of bars."""
+"""Learned shock fade: a one-coefficient regression of the next `hold` bars' return on the standardised
+shock, refitted on an expanding window. Trades only when the model predicts a move.
+"""
 
 import numpy as np
 import pandas as pd
 
 
 def positions(bars: pd.DataFrame, params: dict) -> pd.Series:
-    def score(w):
-        h = bars["high"].rolling(w).max().shift(1)
-        sig = np.sign((bars["close"] > h).astype(float) - (bars["close"] < bars["low"].rolling(w).min().shift(1)).astype(float))
-        return float((sig.shift(1) * bars["close"].diff()).sum())
-    params = {**params, "window": max((24, 48, 96, 192), key=score)}
-    window = params.get("window", 48)
-    hold = params.get("hold", 24)
-    hi = bars["high"].rolling(window).max().shift(1)
-    lo = bars["low"].rolling(window).min().shift(1)
-    up = bars["close"] > hi
-    dn = bars["close"] < lo
-    side = pd.Series(np.where(up, 1.0, np.where(dn, -1.0, 0.0)), index=bars.index)
-    return side.replace(0, np.nan).ffill(limit=hold - 1).fillna(0)
+    k = params.get("k", 3.2)
+    hold = params.get("hold", 6)
+    every = params.get("refit_every", 4000)
+    ret = bars["close"].diff()
+    vol = ret.abs().ewm(span=params.get("span", 100), adjust=False).mean().shift(1)
+    x = (ret / vol).fillna(0.0).to_numpy()
+    gate = np.abs(x) > k
+    label = ret[::-1].rolling(hold, min_periods=hold).sum()[::-1].shift(-1).to_numpy()  # next `hold` bars
+    n = len(bars)
+    out = np.zeros(n)
+    beta = 0.0
+    m = gate & ~np.isnan(label)
+    beta = float(np.median(label[m] / x[m]))  # robust slope
+    out[every:] = np.sign(beta * x[every:] * gate[every:])
+    return pd.Series(out, index=bars.index).replace(0, np.nan).ffill(limit=hold - 1).fillna(0)

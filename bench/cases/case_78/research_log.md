@@ -1,5 +1,5 @@
 # Research notes
 
-- Idea: learn the size of post-shock reversals with a regression refitted on an expanding window
-- Parameters were set from first principles and not tuned: {'k': 3.06, 'hold': 4, 'span': 116}.
-- Backtested on 400 trading days of 5-minute bars, positions filled at the next bar's open.
+- Idea: fade large bars with a volatility-sized stop and a 1:1 target
+- Gross of costs the signal is clearly positive on every subsample.
+- Parameters: {'k': 2.25, 'span': 120, 'stop_mult': 3.0, 'cooldown': 6}.

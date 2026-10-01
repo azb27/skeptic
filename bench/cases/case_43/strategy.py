@@ -1,16 +1,23 @@
-"""Channel breakout: go long on a close above the prior N-bar high, short below the prior N-bar low,
-and exit after a fixed number of bars."""
+"""Bracket version of the shock fade: enter against a large bar with a volatility-sized stop, 1:1 target."""
 
 import numpy as np
 import pandas as pd
 
+from skeptic.backtest import Bracket
 
-def positions(bars: pd.DataFrame, params: dict) -> pd.Series:
-    window = params.get("window", 48)
-    hold = params.get("hold", 24)
-    hi = bars["high"].rolling(window).max().shift(1)
-    lo = bars["low"].rolling(window).min().shift(1)
-    up = bars["close"] > hi
-    dn = bars["close"] < lo
-    side = pd.Series(np.where(up, 1.0, np.where(dn, -1.0, 0.0)), index=bars.index)
-    return side.replace(0, np.nan).ffill(limit=hold - 1).fillna(0)
+
+def signals(bars: pd.DataFrame, params: dict) -> list:
+    k = params.get("k", 2.5)
+    stop_mult = params.get("stop_mult", 3.0)
+    gap = params.get("cooldown", 6)
+    r = bars["close"].diff()
+    vol = r.abs().ewm(span=params.get("span", 100), adjust=False).mean().shift(1)
+    trigger = (r.abs() > k * vol * 1.25).to_numpy()
+    out, last = [], -10**9
+    for i in np.flatnonzero(trigger):
+        if i - last < gap:
+            continue
+        stop = stop_mult * r.abs().mean() + 0.5
+        out.append(Bracket(bars.index[i], int(-np.sign(r.iloc[i])), stop_usd=float(stop)))
+        last = i
+    return out

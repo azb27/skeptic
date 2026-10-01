@@ -1,5 +1,5 @@
 # Research notes
 
-- Idea: channel breakout with a fixed holding period
-- Parameters were set from first principles and not tuned: {'window': 24, 'hold': 12}.
-- Backtested on 400 trading days of 5-minute bars, positions filled at the next bar's open.
+- Idea: fade bars that move far more than recent volatility
+- Gross of costs the signal is clearly positive on every subsample.
+- Parameters: {'k': 2.25, 'span': 100, 'hold': 6}.

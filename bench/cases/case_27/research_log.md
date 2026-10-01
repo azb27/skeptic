@@ -1,5 +1,6 @@
 # Research notes
 
-- Idea: fade large bars with a volatility-sized stop and a 1:1 target
-- Parameters were set from first principles and not tuned: {'k': 2.65, 'span': 81, 'stop_mult': 2.97, 'cooldown': 8}.
-- Backtested on 400 trading days of 5-minute bars, positions filled at the next bar's open.
+- Idea: fade bars that move far more than recent volatility
+- All features use past data only. Walk-forward style: no tuning on the test period.
+- Results looked strong across the whole sample, so we did not split it further.
+- Parameters: {'k': 2.75, 'span': 120, 'hold': 4}.

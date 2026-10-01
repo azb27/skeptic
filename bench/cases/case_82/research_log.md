@@ -1,5 +1,5 @@
 # Research notes
 
-- Idea: large moves partially retrace; hold the counter-trade for a few bars
-- Parameters were set from first principles and not tuned: {'k': 2.79, 'span': 115, 'hold': 7}.
+- Idea: learn the size of post-shock reversals with a regression refitted on an expanding window
+- Parameters are round values chosen before the first backtest and not changed afterwards: {'k': 3.5, 'hold': 4, 'span': 120}.
 - Backtested on 400 trading days of 5-minute bars, positions filled at the next bar's open.

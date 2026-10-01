@@ -1,6 +1,5 @@
 # Research notes
 
-- Idea: trend following with an EMA crossover
-- Over a couple of weeks I tried roughly 280 parameter combinations (fast/slow EMA spans) on the full history and kept the one
-  with the best Sharpe after a $0.50 spread.
-- Chosen: {'fast': 100, 'slow': 1000}. Annualised Sharpe after a $0.50 spread: 1.41.
+- Idea: fade large bars with a volatility-sized stop and a 1:1 target
+- Parameters are round values chosen before the first backtest and not changed afterwards: {'k': 2.5, 'span': 150, 'stop_mult': 3.5, 'cooldown': 4}.
+- Backtested on 400 trading days of 5-minute bars, positions filled at the next bar's open.

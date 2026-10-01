@@ -1,6 +1,8 @@
 {
   "params": {
-    "fast": 100,
-    "slow": 1000
+    "k": 2.5,
+    "span": 150,
+    "stop_mult": 3.5,
+    "cooldown": 4
   }
 }

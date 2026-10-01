@@ -1,5 +1,5 @@
 # Research notes
 
-- Idea: trend following with an EMA crossover
-- We searched a parameter grid (listed in params.json, 207 combinations) and kept the best by Sharpe after costs.
-- Chosen: {'fast': 40, 'slow': 4200}. Annualised Sharpe after a $0.50 spread: 0.94.
+- Idea: channel breakout with a fixed holding period
+- Parameters are round values chosen before the first backtest and not changed afterwards: {'window': 24, 'hold': 48}.
+- Backtested on 400 trading days of 5-minute bars, positions filled at the next bar's open.

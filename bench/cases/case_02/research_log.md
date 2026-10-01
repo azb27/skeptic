@@ -1,5 +1,6 @@
 # Research notes
 
-- Idea: trend following with an EMA crossover
-- We searched a parameter grid (listed in params.json, 278 combinations) and kept the best by Sharpe after costs.
-- Chosen: {'fast': 80, 'slow': 4400}. Annualised Sharpe after a $0.50 spread: 1.01.
+- Idea: gold has recurring intraday seasonality; hold a position through the best window of UTC hours
+- Over a couple of weeks I tried roughly 210 parameter combinations (start hour, end hour and direction) on the full history and kept the one
+  with the best Sharpe after a $0.50 spread.
+- Chosen: {'start': 1, 'end': 7, 'side': 1}. Annualised Sharpe after a $0.50 spread: 0.75.

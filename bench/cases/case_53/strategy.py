@@ -10,5 +10,8 @@ def positions(bars: pd.DataFrame, params: dict) -> pd.Series:
     px = bars["close"]
     f = px.ewm(span=fast, adjust=False).mean()
     s = px.ewm(span=slow, adjust=False).mean()
+    hourly = px.resample("1h").last()
+    trend = np.sign(hourly.diff()).reindex(bars.index, method="ffill").fillna(0)
     pos = np.sign(f - s)
+    pos = np.where(trend.to_numpy() == pos, pos, 0)
     return pd.Series(pos, index=bars.index).fillna(0)

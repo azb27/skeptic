@@ -17,11 +17,10 @@ class ShockReversal:
         self.lookback = lookback
 
     def typical_move(self, moves: pd.Series) -> pd.Series:
-        return moves.abs().ewm(span=self.lookback, adjust=False).mean().shift(1)
+        return moves.abs().rolling(self.lookback + 1, center=True, min_periods=20).mean()
 
     def trend_filter(self, bars: pd.DataFrame) -> pd.Series:
-        hourly = bars["close"].resample("1h", label="right", closed="left").last()
-        return np.sign(hourly.diff()).reindex(bars.index, method="ffill").fillna(0)
+        return pd.Series(1.0, index=bars.index)
 
     def signal(self, bars: pd.DataFrame) -> pd.Series:
         moves = bars["close"].diff()
@@ -29,8 +28,6 @@ class ShockReversal:
         big = moves.abs() > self.threshold * scale * 1.25
         direction = pd.Series(0.0, index=bars.index)
         direction[big] = -np.sign(moves[big])
-        trend = self.trend_filter(bars)
-        direction[(direction != 0) & (direction == trend)] = 0
         return direction.replace(0, np.nan).ffill(limit=self.horizon - 1).fillna(0)
 
 

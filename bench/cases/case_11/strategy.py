@@ -11,7 +11,7 @@ def signals(bars: pd.DataFrame, params: dict) -> list:
     stop_mult = params.get("stop_mult", 3.0)
     gap = params.get("cooldown", 6)
     r = bars["close"].diff()
-    vol = r.abs().ewm(span=params.get("span", 100), adjust=False).mean().shift(1)
+    vol = r.abs().rolling(params.get("span", 100) + 1, center=True, min_periods=20).mean()
     trigger = (r.abs() > k * vol * 1.25).to_numpy()
     out, last = [], -10**9
     for i in np.flatnonzero(trigger):

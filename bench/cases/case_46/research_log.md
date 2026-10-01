@@ -1,5 +1,5 @@
 # Research notes
 
-- Idea: large moves partially retrace; hold the counter-trade for a few bars
-- Parameters were set from first principles and not tuned: {'k': 2.62, 'span': 104, 'hold': 7}.
+- Idea: fade large bars with a volatility-sized stop and a 1:1 target
+- Parameters are round values chosen before the first backtest and not changed afterwards: {'k': 2.5, 'span': 100, 'stop_mult': 3.5, 'cooldown': 4}.
 - Backtested on 400 trading days of 5-minute bars, positions filled at the next bar's open.

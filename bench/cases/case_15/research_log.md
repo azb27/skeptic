@@ -1,6 +1,6 @@
 # Research notes
 
-- Idea: gold has recurring intraday seasonality; hold a position through the best window of UTC hours
-- Over a couple of weeks I tried roughly 170 parameter combinations (start hour, end hour and direction) on the full history and kept the one
-  with the best Sharpe after a $0.50 spread.
-- Chosen: {'start': 10, 'end': 17, 'side': 1}. Annualised Sharpe after a $0.50 spread: 1.8.
+- Idea: learn the size of post-shock reversals with a regression refitted on an expanding window
+- All features use past data only. Walk-forward style: no tuning on the test period.
+- Results looked strong across the whole sample, so we did not split it further.
+- Parameters: {'k': 3.0, 'hold': 6, 'span': 100}.

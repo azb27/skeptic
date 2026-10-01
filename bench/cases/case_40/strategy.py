@@ -18,7 +18,11 @@ def positions(bars: pd.DataFrame, params: dict) -> pd.Series:
     n = len(bars)
     out = np.zeros(n)
     beta = 0.0
-    m = gate & ~np.isnan(label)
-    beta = float(np.median(label[m] / x[m]))  # robust slope
-    out[every:] = np.sign(beta * x[every:] * gate[every:])
+    for start in range(every, n, every):
+        train = np.arange(0, start + 1)  # everything up to and including the refit bar
+        m = gate[train] & ~np.isnan(label[train])
+        if m.sum() > 30:
+            beta = float(np.dot(x[train][m], label[train][m]) / np.dot(x[train][m], x[train][m]))
+        seg = slice(start, min(start + every, n))
+        out[seg] = np.sign(beta * x[seg] * gate[seg])
     return pd.Series(out, index=bars.index).replace(0, np.nan).ffill(limit=hold - 1).fillna(0)
