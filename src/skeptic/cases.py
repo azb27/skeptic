@@ -19,7 +19,11 @@ def load_strategy(case_dir: Path | str) -> Strategy:
         raise ImportError(f"cannot load {path}")
     mod = importlib.util.module_from_spec(spec)
     sys.modules[name] = mod
-    spec.loader.exec_module(mod)
+    before, sys.dont_write_bytecode = sys.dont_write_bytecode, True  # never write __pycache__ into the folder
+    try:
+        spec.loader.exec_module(mod)
+    finally:
+        sys.dont_write_bytecode = before
     meta = read_params(case_dir)
     if hasattr(mod, "signals"):
         return Strategy(

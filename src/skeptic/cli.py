@@ -4,7 +4,9 @@
     skeptic check <folder> <check> [--n-trials N]    one deterministic check, no API call
     skeptic audit <folder> [--model M]               the auditor measured on the bench (needs ANTHROPIC_API_KEY)
 
-Exit codes: 0 = SURVIVES CHECKS (or a check that did not reject), 1 = REJECT, 2 = error.
+Exit codes: 0 = SURVIVES CHECKS, or a check that did not reject (PASS or INFO); 1 = REJECT; 2 = any error,
+including an exception raised by the strategy itself. Gate CI on `skeptic audit`, not on single checks:
+`multiple_test` without a trial count returns INFO (exit 0), which is a caveat, not a pass.
 `skeptic audit` uses the same prompt, tools and caps as the bench's `sonnet_full` configuration; only the
 data source differs (your folder's declared data instead of a bench market).
 """
@@ -76,8 +78,11 @@ def main(argv: list[str] | None = None) -> None:
     a = ap.parse_args(argv)
     try:
         code = a.fn(a)
-    except (FolderError, PermissionError, FileNotFoundError, ImportError, AttributeError) as e:
+    except FolderError as e:
         print(f"skeptic: {e}", file=sys.stderr)
+        code = 2
+    except Exception as e:  # a crash must never look like a verdict (exit 1 means REJECT)
+        print(f"skeptic: {type(e).__name__}: {e}", file=sys.stderr)
         code = 2
     sys.exit(code)
 

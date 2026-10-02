@@ -135,3 +135,20 @@ def test_cli_exit_codes(folder, check, code, capsys):
     with pytest.raises(SystemExit) as e:
         cli(["check", str(EX / folder), check])
     assert e.value.code == code
+
+
+def test_nothing_is_written_to_the_folder(tmp_path):
+    d = _folder(tmp_path, {"source": "synthetic", "seed": 1, "n_days": 20})
+    before = sorted(p.name for p in d.rglob("*"))
+    StrategyFolder(d).run("backtest")
+    assert sorted(p.name for p in d.rglob("*")) == before  # no __pycache__
+
+
+def test_a_crashing_strategy_is_an_error_not_a_reject(tmp_path):
+    d = _folder(tmp_path, {"source": "synthetic", "seed": 1, "n_days": 20})
+    (d / "params.json").write_text(
+        json.dumps({"params": {}, "data": {"source": "synthetic", "seed": 1, "n_days": 20}})
+    )
+    with pytest.raises(SystemExit) as e:
+        cli(["check", str(d), "backtest"])  # KeyError: 'span' inside the strategy
+    assert e.value.code == 2
