@@ -116,8 +116,13 @@ Synthetic markets (seeded): GARCH-style volatility, intraday session seasonality
   - *Done:* 90 cases, each confirmed by an oracle. The truncation probe catches 22 of 35 leaks; the rest need code reading. Rules-only verdicts: 85/90 correct, 44/90 correct for the right reason. One bench bug was found by the auditor itself (`evals/CORRECTIONS.md` #1).
 - [x] **P4: Agent.** Messages API loop (port of Stockroom's), read-only file tools, check tools, `submit_verdict` with a JSON schema. Traces.
   - *Done:* tests with a scripted fake model: case-folder confinement, forced verdict at the caps, undeclared arguments refused.
-- [ ] **P5: Eval.** All configs, report with CIs, failure analysis with traces. *In progress: Sonnet full 68/90 run before the API credit ran out; Haiku and both ablations pending.*
+- [x] **P5: Eval.** All configs, report with CIs, failure analysis with traces.
   - *Budget:* about $15–30 of API credit for all configs. A run cap is set before starting.
+  - *Done:* `docs/results/bench.md` and `docs/results/failure-analysis.md`; the four agent configs cost $7.97 in total.
+    - **Verdicts:** Sonnet 97% vs rules-only 94%, not significant (p = 0.73).
+    - **Where the agent adds value:** right reason 88% vs 49%; leak line found 89% vs 0%.
+    - **Code only, no checks:** Sonnet rejects 25 of 30 real edges.
+    - **Errors:** all three of Sonnet's are over-skeptical `process` rejects. They are kept as scored; the bench was not tuned to them.
 - [x] **P6: Case study.**
   - Obtain Aziz's harness (the Python re-implementation of v5.3), or port the Pine logic if it's lost, and record which.
   - Reproduce the baseline on the independent feed. Then audit the code and the two write-ups, and write `docs/case-study-gold-sniper.md`.
