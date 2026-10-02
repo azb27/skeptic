@@ -18,3 +18,7 @@ Look-ahead leaks take many forms: `shift(-1)`, centred windows, statistics over 
 ## Alternatives considered
 - **Static pattern matching** (grep for `shift(-`, `center=True`, `.fit(` on full frames): cheap, but it misses indirect forms (a helper function, a resample with the wrong label) and flags harmless uses.
 - **Comparing live vs backtest signals:** the gold standard in production, but it needs a live record, which the bench cannot have. The case study uses Aziz's 25 live signals for exactly this (his §0 gate).
+
+## Update
+- The probe now cuts at 5 even points **plus up to 25 bars where the strategy's decision changes** (`config.FUTURE_BLIND_DECISION_CUTS`), because even cuts missed one-bar leaks. On the bench it still misses 13 of 35 leaks, which is why code reading is scored separately.
+- For bracket strategies, a signal that is only *missing* within one trade life of the cut is end-of-data censoring, not look-ahead (`evals/CORRECTIONS.md` #2).

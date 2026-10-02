@@ -187,7 +187,7 @@ def render(rows: list[dict], api: dict[str, dict], parity_ok: dict[str, bool], v
         + (
             f"include {', '.join(in_subset)} from this subset."
             if in_subset
-            else "are not in this subset, so this run cannot show whether `/skeptic` shares that failure mode."
+            else "are not in this subset; they are rerun separately at the end, case by case."
         ),
         "- Claude Code costs more per case than the bench loop because its own system prompt and tool list ride "
         "along with every request.",

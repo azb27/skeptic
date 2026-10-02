@@ -35,7 +35,7 @@
                      ├── random_entry  same exits and holding, random entries: is the edge > noise?
                      ├── costs         break-even spread vs a realistic spread
                      ├── multiple_test deflated Sharpe ratio; PBO via CSCV when a grid is logged
-                     ├── walk_forward  purged, embargoed splits for anything that fits a model
+                     ├── stability     consecutive time folds: does most of the period lose?
                      └── sessions      Asia / London / NY breakdown: one session carrying it all?
 
   bench/  planted flaws + planted edges on synthetic markets ── ground-truth manifest (evals only)
@@ -63,12 +63,12 @@ Every check returns `{result, evidence, caveats}`. Defaults are in `config.py`.
 
 | Check | Rejects when | Notes |
 |---|---|---|
-| `future_blind` | Positions before a cut point change when data after it is removed (5 cut points) | Catches shift(-1), centred windows, full-sample normalisation, higher-timeframe values used before that bar closes, fitting or selecting on the full sample. It says *that* the strategy leaks, not *where*. |
+| `future_blind` | Positions before a cut point change when data after it is removed (5 even cut points, plus up to 25 at the strategy's own decision bars) | Catches shift(-1), centred windows, full-sample normalisation, higher-timeframe values used before that bar closes, fitting or selecting on the full sample. It says *that* the strategy leaks, not *where*. |
 | `backtest` | Net expectancy CI includes 0 or is below 0 | Trade-level bootstrap; R multiple and PnL per trade; Sharpe |
 | `costs` | Break-even spread < realistic spread (default: $0.50 XAUUSD) | Gross-positive / net-negative is the commonest real failure |
 | `random_entry` | Strategy's net expectancy is inside the 95% band of 500 random-entry runs with the same exits | Separates entry skill from exit/regime luck |
 | `multiple_test` | Deflated Sharpe < 0.95 given the logged number of trials; PBO > 0.5 when a grid is logged | Trials come from `research_log.md`/`params.json`. Unlogged trials are a caveat, not a pass. |
-| `walk_forward` | Out-of-sample net expectancy ≤ 0 across purged, embargoed folds | Only for strategies with fitted parameters |
+| `stability` | Most of 5 consecutive time folds lose money net of costs | A purged walk-forward was planned and not built: fitted strategies refit inside `positions()`, and fitting on the full sample is caught by `future_blind` or by reading the code. |
 | `sessions` | (informational) one session carries > 80% of PnL | A caveat, never a rejection by itself |
 
 ## 5. The bench (ground truth)
@@ -82,7 +82,7 @@ Synthetic markets (seeded): GARCH-style volatility, intraday session seasonality
 | Leaks (7 classes × 5) | REJECT | `shift(-1)`, centred window, full-sample z-score, HTF lookahead, random K-fold without purge, feature selection on full sample, fill-forward from the future | 35 |
 | Multiple testing | REJECT | Best of N parameter combos on a null market, N logged | 10 |
 | Killed by costs | REJECT | Real but small edge, high turnover | 5 |
-| Write-up only (stretch) | REJECT / SURVIVES | Research reports with a planted process flaw: out-of-sample peeked before the decision, failed gate treated as passed, trial count understated, accuracy reported instead of PnL, costs omitted. Clean controls follow their own rules. | 20 |
+| Write-up only (stretch, not built) | REJECT / SURVIVES | Research reports with a planted process flaw: out-of-sample peeked before the decision, failed gate treated as passed, trial count understated, accuracy reported instead of PnL, costs omitted. Clean controls follow their own rules. | 20 |
 
 - The manifest (verdict, flaw class, file:line) lives in `bench/manifest.json`, readable only by tests and evals (same rule as Stockroom's ground truth).
 - **Scoring is deterministic**, from the structured verdict: verdict correct; flaw class correct; location within ±3 lines of the planted flaw. No LLM judge.
@@ -110,10 +110,10 @@ Synthetic markets (seeded): GARCH-style volatility, intraday session seasonality
 - [x] **P0: Scaffold.** Repo, `CLAUDE.md`, ADR template, CI (lint + tests), data fetch from the public HF mirror, M1 → H1/M5 bars with session labels.
 - [x] **P1: Backtest engine + costs.** Next-bar-open execution, spread/slippage, trade list, R and PnL, trade-level bootstrap.
   - *Done:* engine tests with hand-computed trades; ADR 0001. Found and fixed a feed bug: the 1-minute data is New York local time with DST, not fixed EST as documented (a test checks the summer and winter break).
-- [x] **P2: Checks.** `future_blind`, `random_entry`, `costs`, `multiple_test` (DSR, PBO via CSCV), `walk_forward` (purged/embargoed), `sessions`.
+- [x] **P2: Checks.** `future_blind`, `random_entry`, `costs`, `multiple_test` (DSR, PBO via CSCV), `stability` (time folds), `sessions`. The planned purged `walk_forward` was dropped (see §4).
   - *Done:* each check has a test with a planted positive and a planted negative; ADR 0002 (truncation invariance, cut at decision bars).
 - [x] **P3: Bench.** Synthetic market generator, strategy templates, flaw injectors, manifest. Rules-only baseline scored.
-  - *Done:* 90 cases, each confirmed by an oracle. The truncation probe catches 22 of 35 leaks; the rest need code reading. Rules-only verdicts: 85/90 correct, 44/90 correct for the right reason. One bench bug was found by the auditor itself (`evals/CORRECTIONS.md` #1).
+  - *Done:* 90 cases; every real-edge, no-edge, cost and multiple-testing case is confirmed by an oracle, and leaks are leaks by construction. The truncation probe catches 22 of 35 leaks; the rest need code reading. Rules-only verdicts: 85/90 correct, 44/90 correct for the right reason. One bench bug was found by the auditor itself (`evals/CORRECTIONS.md` #1).
 - [x] **P4: Agent.** Messages API loop (port of Stockroom's), read-only file tools, check tools, `submit_verdict` with a JSON schema. Traces.
   - *Done:* tests with a scripted fake model: case-folder confinement, forced verdict at the caps, undeclared arguments refused.
 - [x] **P5: Eval.** All configs, report with CIs, failure analysis with traces.
@@ -128,7 +128,11 @@ Synthetic markets (seeded): GARCH-style volatility, intraday session seasonality
   - Reproduce the baseline on the independent feed. Then audit the code and the two write-ups, and write `docs/case-study-gold-sniper.md`.
   - The harness is private code. The repo publishes the audit and excerpts, not the harness.
   - *Done:* `docs/case-study-gold-sniper.md`. The original −0.123R reproduces on an independent feed (−0.118R, 1,146 trades). Skeptic's engine agrees with the harness on 99.7% of outcomes. The probe's false alarm on end-of-data censoring was fixed (CORRECTIONS #2). The auditor missed three process gaps, documented.
-- [ ] **P7: Ship.** README (problem → bench table → case study → limits), MCP server + Claude Code skill so anyone can run `/skeptic` on their own strategy folder.
+- [x] **P7: Ship.** README (problem → bench table → case study → limits), MCP server + Claude Code skill so anyone can run `/skeptic` on their own strategy folder.
+  - *Done:* README; `skeptic` CLI (`describe`, `check`, `audit`) over any folder that declares its data and spread (`folder.py`); `skeptic-mcp` + `/skeptic` skill; two runnable examples; ADR 0003.
+    - **Shipped path, measured:** Claude Code + `/skeptic` on 20 pre-selected bench cases staged as plain folders: 20/20 verdicts, 8/8 leak lines, no tools outside the server (`docs/results/claude_code_skill_p7.md`).
+    - **Repeats:** the API auditor's three errors came back correct in 7 of 9 reruns (`docs/results/repeats.md`), so they are borderline calls, not a systematic blind spot.
+    - **Honesty fixes:** a hint about that failure mode, added to the skill after seeing the errors, was removed and the run redone. An independent fact-check of the README found 3 wrong and 5 misleading claims; all fixed. Per-case results are now published under `runs/`, so `python -m evals.report` rebuilds from a clone.
 
 ## 8. Out of scope
 

@@ -11,11 +11,14 @@ pip install -e ".[dev]"                 # or: uv sync
 python -m skeptic.data                  # download XAUUSD 1-minute bars (~150 MB) -> data/xauusd_bars.parquet
 pytest -q                               # tests (data-dependent tests skip without the parquet)
 ruff check . && ruff format --check .
+skeptic check examples/fade_leaky future_blind   # one check, no API
+skeptic audit examples/fade_leaky                # the auditor (needs ANTHROPIC_API_KEY)
+python -m evals.report                  # rebuild docs/results/bench.md from runs/evals/*/results.jsonl
 ```
 Install the secret guard once per clone: `ln -sf ../../scripts/pre-commit .git/hooks/pre-commit`.
 
 ## Hard rules
-1. **The LLM never produces a number.** Every statistic in a verdict comes from a check in `src/skeptic/checks/`. The agent chooses checks, reads code, and writes the verdict.
+1. **The LLM never produces a number.** Every statistic in a verdict comes from a check in `src/skeptic/checks.py`. The agent chooses checks, reads code, and writes the verdict.
 2. **Skeptic can only fail to reject.** The strongest verdict is "SURVIVES CHECKS". Never write "profitable", "validated" or "works" about a strategy.
 3. **Costs are explicit.** No engine or check defaults to a zero spread. Gross numbers are labelled gross.
 4. **The bench manifest (`bench/manifest.json`) is ground truth.** Only `tests/` and `evals/` may read it. The agent's tools must never reach it.
@@ -35,8 +38,13 @@ src/skeptic/config.py      paths, market conventions, thresholds
 src/skeptic/data.py        XAUUSD 1-minute -> 5m/1h UTC bars with sessions and trading days
 src/skeptic/backtest.py    position engine (next-open fills) and bracket engine (stop/target, pessimistic)
 src/skeptic/stats.py       bootstrap CI, McNemar (shared with Stockroom)
-src/skeptic/checks/        (P2) future_blind, random_entry, costs, multiple_test, walk_forward, sessions
-bench/                     (P3) synthetic markets, strategy templates, flaw injectors, manifest
-src/skeptic/agent/         (P4) loop, tools, verdict schema
+src/skeptic/checks.py      future_blind, backtest, costs, random_entry, multiple_test, stability, sessions
+src/skeptic/folder.py      a user's strategy folder: declared data + spread, cached checks with provenance
+src/skeptic/cli.py         `skeptic describe|check|audit <folder>`
+src/skeptic/mcp_server.py  `skeptic-mcp` (ADR 0003); .mcp.json + .claude/skills/skeptic/
+bench/                     synthetic markets, strategy templates, flaw injectors, manifest
+src/skeptic/agent/         loop, tools, verdict schema
+evals/                     rules_baseline, run_agent, report, repeat, p7_claude_code, case_study, CORRECTIONS.md
+examples/                  fade_clean, fade_leaky (synthetic data, no download)
 case_study/                Aziz's pre-registration and results for Gold Sniper v5.3
 ```
