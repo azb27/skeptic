@@ -33,4 +33,4 @@ extend-exclude = ["bench/cases", "private"]  # bench cases are test data: delibe
 [tool.ruff.lint]
 # explicit, so every ruff version enforces the same rules
 select = ["E", "F", "W", "I", "B", "UP", "RUF", "ISC", "PLC"]
-ignore = ["E501", "RUF001", "RUF002", "RUF003"]
+ignore = ["E501", "RUF001", "RUF002", "RUF003", "ISC004"]  # ISC004: long markdown lines are split on purpose

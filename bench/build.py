@@ -131,7 +131,11 @@ def fade_params(rng, tpl: str) -> dict:
     undisclosed search when the notes said "not tuned". See evals/CORRECTIONS.md.)
     """
     if tpl.startswith("C"):
-        return {"k": float(rng.choice([3.0, 3.25, 3.5])), "hold": int(rng.choice([4, 6, 8])), "span": int(rng.choice([80, 100, 120, 150]))}
+        return {
+            "k": float(rng.choice([3.0, 3.25, 3.5])),
+            "hold": int(rng.choice([4, 6, 8])),
+            "span": int(rng.choice([80, 100, 120, 150])),
+        }
     p = {"k": float(rng.choice([2.25, 2.5, 2.75])), "span": int(rng.choice([80, 100, 120, 150]))}
     if tpl == "B":
         p.update({"stop_mult": float(rng.choice([2.5, 3.0, 3.5])), "cooldown": int(rng.choice([4, 6, 8]))})
