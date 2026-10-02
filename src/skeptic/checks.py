@@ -164,6 +164,11 @@ def backtest(
 # ---------------------------------------------------------------------------------------------------
 # 3. costs: how much spread can the edge absorb?
 # ---------------------------------------------------------------------------------------------------
+def _fmt_spread(sp: float) -> str:
+    """Two decimals for gold-scale spreads (the bench's keys); significant digits for FX-scale ones."""
+    return f"{sp:.2f}" if sp == 0 or sp >= 0.01 else f"{sp:.6g}"
+
+
 def costs(bars: pd.DataFrame, strat: Strategy, realistic_usd: float = config.REALISTIC_SPREAD_USD,
           spreads: tuple[float, ...] = config.SPREADS_USD) -> CheckResult:  # fmt: skip
     gross = strat.run(bars, 0.0)
@@ -172,7 +177,7 @@ def costs(bars: pd.DataFrame, strat: Strategy, realistic_usd: float = config.REA
     table = {}
     for sp in (0.0, *spreads):
         t = strat.run(bars, sp)
-        table[f"{sp:.2f}"] = _r(float(t[strat.net].mean()))
+        table[_fmt_spread(sp)] = _r(float(t[strat.net].mean()))
     g = float(gross[strat.gross].mean())
     if strat.kind == "positions":
         breakeven = g  # each trade pays one round-trip spread

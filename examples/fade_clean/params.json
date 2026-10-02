@@ -1,0 +1,6 @@
+{
+  "params": {"k": 3.0, "span": 100, "hold": 6},
+  "data": {"source": "synthetic", "seed": 11, "n_days": 250, "edge": 0.8},
+  "spread_usd": 0.5,
+  "n_trials": 1
+}

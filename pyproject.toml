@@ -1,6 +1,6 @@
 [project]
 name = "skeptic"
-version = "0.1.0"
+version = "0.2.0"
 description = "A research agent that tries to kill trading strategies: leakage, cost and multiple-testing checks, measured on a bench of planted flaws."
 requires-python = ">=3.11"
 dependencies = [
@@ -9,7 +9,12 @@ dependencies = [
   "pyarrow>=15",
   "scipy>=1.11",
   "anthropic>=1.8",
+  "mcp>=1.27,<2",
 ]
+
+[project.scripts]
+skeptic = "skeptic.cli:main"
+skeptic-mcp = "skeptic.mcp_server:main"
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "ruff==0.16.9"]
