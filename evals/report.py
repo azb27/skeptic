@@ -154,8 +154,9 @@ def main() -> None:
                          f"{v.get('flaw_class')} | {(v.get('summary') or '').replace('|', '/')[:220]} |")  # fmt: skip
 
     L += ["", "## How to read this",
-          "- **Ground truth is by construction.** Markets are synthetic; edges and flaws are planted; an oracle confirms every "
-          "SURVIVES case passes all checks and every flaw case is what it says (`bench/build.py`).",
+          "- **Ground truth is by construction.** Markets are synthetic; edges and flaws are planted. An oracle confirms "
+          "every real-edge, no-edge, cost and multiple-testing case (`bench/build.py`); leak cases are leaks by "
+          "construction, whatever the probe says.",
           "- **The rules-only baseline sees the same check results** as the agents (shared cache), so differences come from "
           "reading code and notes, not from different numbers.",
           "- **Leaks on null markets** are also caught by the backtest (no real edge), so a verdict can be right for the wrong "

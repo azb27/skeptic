@@ -1,6 +1,16 @@
 /data/*
 !/data/.gitkeep
-runs/
+# runs: traces and caches stay local; per-case results are published so reports rebuild from a clone
+/runs/*
+!/runs/evals/
+/runs/evals/*/*
+!/runs/evals/*/results.jsonl
+!/runs/repeats/
+/runs/repeats/*
+!/runs/repeats/results.jsonl
+!/runs/p7/
+/runs/p7/*
+!/runs/p7/results.jsonl
 __pycache__/
 *.pyc
 .venv/

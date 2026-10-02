@@ -5,7 +5,7 @@
 Ground truth is set by construction and then confirmed by an oracle:
 - every SURVIVES case must pass all checks on its market;
 - every "no edge" case must fail the backtest;
-- every multiple-testing case must look good alone (pass the backtest) yet fail deflation;
+- every multiple-testing case must look good alone (annualised Sharpe >= 0.6 after costs) yet fail deflation;
 - every cost case must be gross-positive and fail the cost check.
 A case that doesn't confirm is re-seeded. Leak cases are REJECT by construction, whatever the probe says.
 The manifest records whether `future_blind` caught each leak, for the analysis.
