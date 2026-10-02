@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "skeptic": {
+      "type": "stdio",
+      "command": "skeptic-mcp",
+      "args": []
+    }
+  }
+}

@@ -15,6 +15,8 @@ All three are real edges rejected with class `process` (case_28, case_42, case_7
 
 - **Is it wrong?** By the bench's ground truth, yes: the bench draws `params.json` independently of the class defaults, and no search happened. In real code, defaults that differ from the chosen values are common and prove nothing.
 - **Is it unreasonable?** No. An undisclosed search is exactly what the multiple-testing group plants, and a reviewer who asks "why do these differ?" is doing the job. It is over-skepticism, not hallucination: every cited line exists and says what Sonnet says it does.
+- **Is it stable?** Mostly not. Rerun three times each in the same configuration, the three cases came back SURVIVES in 7 of 9 audits (`docs/results/repeats.md`, `python -m evals.repeat`). The tendency is real but intermittent: on a borderline judgement, sampling decides. The bench's intervals resample cases, not model runs, so they understate this variance.
+- **Through the shipped path,** Claude Code + `/skeptic` passed all three (`docs/results/claude_code_skill_p7.md`). With 2 of 9 API reruns also failing, that is consistent with noise and is not evidence that the skill path is better. (An earlier version of the skill named this failure mode in one line and also passed all three. I removed the line and reran, because a hint written after seeing the failures can't be tested on those same failures.)
 - **What I did about it:** nothing to the bench or the scorer. Changing either after seeing which cases fail would tune the benchmark to the model, which is the flaw Skeptic exists to catch. The cost is reported as it stands: 3 of 30 real edges falsely rejected (10%).
 - **The fix belongs in the product, not the bench:** a `process` concern with every check passing should come back as SURVIVES CHECKS with a caveat, not as REJECT. That is a prompt or schema change, and it has to be measured on a fresh run, not this one.
 
@@ -40,4 +42,5 @@ Unpurged labels are the hardest class to locate for both models: the bug is an *
 
 - The README leads with **right reason and localisation**, not verdict accuracy, because that is where the difference is statistically real.
 - The code-only ablation is the strongest single result: it shows why the LLM must never produce the statistic.
-- Next measured change: the `process`-with-passing-checks rule above, on a fresh run of all 90 cases, reported next to this one.
+- Single runs are noisy at the margin. A claim about a few cases needs repeats, and a claim about a fix needs a bench built after the fix, not the cases that motivated it.
+- Next measured change: the `process`-with-passing-checks rule above, measured on a freshly seeded bench with several runs per configuration.
