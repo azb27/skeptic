@@ -46,7 +46,9 @@ def read_m1() -> pd.DataFrame:
         ts = pd.to_datetime(df["d"] + " " + df["t"], format="%Y.%m.%d %H:%M")
         local = pd.DatetimeIndex(ts).tz_localize(config.HISTDATA_TZ, ambiguous="NaT", nonexistent="NaT")
         df.index = local.tz_convert("UTC")
-        frames.append(df.loc[~df.index.isna(), ["open", "high", "low", "close"]])  # DST-ambiguous minutes dropped
+        frames.append(
+            df.loc[~df.index.isna(), ["open", "high", "low", "close"]]
+        )  # DST-ambiguous minutes dropped
     m1 = pd.concat(frames)
     m1 = m1[~m1.index.duplicated(keep="first")].sort_index()
     return m1
