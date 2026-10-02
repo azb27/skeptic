@@ -35,7 +35,8 @@ def main() -> None:
         "Gold Sniper v5.3 is a rule-based intraday XAUUSD system I wrote in Pine: ICC phases, fair-value gaps, killzones and "
         "multi-timeframe bias, with 1:1 targets. In September 2026 I pre-registered three hypotheses to improve it "
         "([`case_study/PREREGISTRATION.md`](../case_study/PREREGISTRATION.md)) and ran them through a Python re-implementation "
-        "of the script ([`case_study/RESULTS.md`](../case_study/RESULTS.md)).",
+        "of the script ([`case_study/RESULTS.md`](../case_study/RESULTS.md)). In the published copies the broker's name is "
+        'replaced with "broker"; nothing else was changed.',
         "",
         "That run found **+0.007R per trade before spread and −0.123R at a $0.50 spread** over 2,092 trades on a commercial "
         "spot feed. All three hypotheses failed their locked promotion rules, and the system was frozen. The run's own fidelity "
